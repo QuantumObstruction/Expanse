@@ -1,0 +1,12 @@
+Weather API (OpenWeather)
+https://openweathermap.org/current
+
+API Key
+843397ebf59e59ab18f5e5733c88938e
+
+Great Tutorial for initial setup
+https://codeburst.io/build-a-simple-weather-app-with-node-js-in-just-16-lines-of-code-32261690901d
+
+Node.js/npm install instructions
+Node.js install with nvm (A more robust approach to having access to node.js versions)
+https://nodesource.com/blog/installing-node-js-tutorial-using-nvm-on-mac-os-x-and-ubuntu/
