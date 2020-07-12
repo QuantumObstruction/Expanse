@@ -1,9 +1,15 @@
 # Expanse
-Agile SCRUB Team 11- Weather App
+
 # James Belknap was here
 # Ryan Mann was here
+# Lydia was here
 
-Suggest name : Weatherpal
+Agile SCRUB Team 11- Weather App
+
+Suggest name : **Weatherpal**
+=======
+
+![Mockup](/mockup.JPG)
 
 ![Web App Diagram](/weatherpal.jpeg)
 
