@@ -1,0 +1,69 @@
+Query OK, 1 row affected (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
++----------------------------------------------------------+
+|                                                          |
++----------------------------------------------------------+
+| Verify noahbody is associated with 90210 following query |
++----------------------------------------------------------+
+1 row in set (0.000 sec)
+
++----------+---------+
+| username | zipcode |
++----------+---------+
+| noahbody | 90210   |
++----------+---------+
+1 row in set (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
++--------------------------------------------------------------+
+|                                                              |
++--------------------------------------------------------------+
+| Verify noahbody is NOT associated with 90210 following query |
++--------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+Empty set (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
++----------------------------------------------------------------------+
+|                                                                      |
++----------------------------------------------------------------------+
+| Verify noahbody is associated with both Portlands in following query |
++----------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
++----------+----------+-------+---------+
+| username | city     | state | country |
++----------+----------+-------+---------+
+| noahbody | Portland | OR    | US      |
+| noahbody | Portland | ME    | US      |
++----------+----------+-------+---------+
+2 rows in set (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
++--------------------------------------------------------------------+
+|                                                                    |
++--------------------------------------------------------------------+
+| Verify noahbody is NOT associated with Portland in following query |
++--------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+Empty set (0.000 sec)
+
+Query OK, 1 row affected (0.000 sec)
+
