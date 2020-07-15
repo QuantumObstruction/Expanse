@@ -3,6 +3,7 @@
 # James Belknap was here
 # Ryan Mann was here
 # Lydia was here
+# Alima was here
 
 Agile SCRUB Team 11- Weather App
 
