@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">	
+		<meta charset="utf-8">
+		<title>Weather App</title>		
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<!--for icons-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+		<main>
+<!--		<img src="avatar.jpg" alt="Avatar" id="avatar"> -->
+
+			<div class="dropdown">
+
+			  <img src="avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
+
+
+			  <div id="myDropdown" class="dropdown-content">
+			    <a href="#">Settings</a>
+			    <a href="#">Help</a>
+			    <a href="login.html">Logout</a>
+			  </div>
+			</div>
+
+			<!--for dropdown menu-->
+			<script>
+				function myFunction() {
+				  document.getElementById("myDropdown").classList.toggle("show");
+				}
+				/* Close the dropdown if the user clicks outside*/
+				window.onclick = function(event) {
+				  if (!event.target.matches('.dropbtn')) {
+				    var dropdowns = document.getElementsByClassName("dropdown-content");
+				    var i;
+				    for (i = 0; i < dropdowns.length; i++) {
+				      var openDropdown = dropdowns[i];
+				      if (openDropdown.classList.contains('show')) {
+				        openDropdown.classList.remove('show');
+				      }
+				    }
+				  }
+				}
+			</script>
+
+			<div style="float: right; text-align: center;">
+				<h4 class="title" style="color:#DC143C; font-size:300%;">Weather App</h4>
+				<h4 class="title" style="color:#B22222; font-style:italic; font-size:130%;">by Expanse</h4>
+			</div>
+
+		</head>
+		
+		<body>
+
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+
+			<!--we can implement autocomplete tab here
+				with the list of zipcode/cities options-->
+
+			<!--search tab and buttons-->
+			<input id="input" placeholder="Search by zipcode/city">
+			<button class="btn" id="searchBtn"><i class="fa fa-search"></i></button>
+			<button class="btn" id="addBtn"><i class="fa fa-plus"></i></button>
+
+			<!--a panel for forecast for saving user's favorite cities-->
+			<div id="panel" class="panel panel-default">
+				<div class="panel-body">
+					<ul>
+						<li>City1</li>
+						<li>City2</li>
+						<li>City3</li>
+					</ul>
+					<!--	<a class="previous round">&#8249;</a>
+					<a class="next round">&#8250;</a>
+					-->
+				</div>
+			</div>
+			
+			<!--days of the week, starting with today-->
+			<p id="weekdays"></p>
+			<script>
+				var day = "";
+				var wDay = new Array(7);
+				wDay[0] = "Sunday";
+				wDay[1] = "Monday";
+				wDay[2] = "Tuesday";
+				wDay[3] = "Wednesday";
+				wDay[4] = "Thursday";
+				wDay[5] = "Friday";
+				wDay[6] = "Saturday";
+
+				var today = new Date().getDay();
+				for(var i=0; i<wDay.length; i++) {
+					day += "<br/>" + wDay[(i+today)%wDay.length] + '<p style="margin:-5px;"></p>';
+				}
+
+				
+				document.getElementById("weekdays").innerHTML = day;
+			</script>
+
+	</main>
+
+		<!--a seperate field for today's weather-->
+	<aside>
+		<div id="aside-text">
+			<h3>Today's Forecast</h3>
+			<p>Information is here</p>
+			<div class="icons">
+				<i class='fas fa-cloud-rain'></i>
+				<i class='fas fa-cloud-sun'></i>
+				<i class='fas fa-cloud-sun-rain'></i>
+				<i class='fas fa-cloud-moon-rain'></i>
+				<i class='fas fa-sun'></i>
+				<i class='fas fa-snowflake'></i>
+			</div>
+		</div>
+	</aside>
+
+	<!--subscription form-->
+
+	<div class="dropdown2">
+
+		<button onclick="location.href='subscription.html';" id="subscr_btn" style="width: 15%; height: 40px; font-size: 15px;">Subscribe!</button>
+
+	</div>
+
+	<!--for dropdown menu-->
+	
+
+						<!--      <h1>Subscribe</h1>
+						      <p>Where do you want to get the weekly weather forecast?</p>
+						      <hr>
+						      <label for="email"><b>Email</b></label>
+						      <input type="text" placeholder="Enter you email" name="email" required>
+			-->	 
+
+
+		<!--a footer-->
+		<div class="footer">
+			<p id="footer" style="padding-top: 22px;">Made by Expanse Team</p>
+			<p id="footer">Oregon State University</p>
+			<p id="footer">Summer 2020</p>
+		</div>
+
+
+	</body>
+</html>
