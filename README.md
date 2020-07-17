@@ -16,6 +16,8 @@ Suggest name : **Weatherpal**
 ![Web App Diagram](/weatherpal.jpeg)
 
 Run Weather APP Instructions
-in "interfaec" directory---
-npm install express request yargs path---
+in "interfaec" directory
+
+npm install express request yargs path
+
 node index.js
