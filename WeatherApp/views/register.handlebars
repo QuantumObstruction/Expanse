@@ -1,0 +1,30 @@
+<script src="/js/inputValidation.js"></script>
+<script src="/js/showAlert.js"></script>
+
+<h2>Under construction</h2>
+
+<p>Need input for picture (database support ?)</p>
+
+<div class="register">
+  <form class="" action="register" method="post"
+       onSubmit="return usernameAndPasswordValidation();">
+    <input type="text" 
+           id="inputUserName" 
+           name="username" 
+           value="{{this.username}}"><br />
+    <label for="inputUserName"> Username </label><br />
+    <input type="password" id="inputPassword" name="password"><br />
+    <label for="inputPassword"> Password </label><br />
+    <input type="text" 
+           id="inputEmailAddr" 
+           name="email" 
+           value="{{this.emailAddr}}"><br />
+    <label for="inputEmailAddr"> e-mail Address </label><br />
+    <input type="submit" name="submit" value="Register" <br />
+  </form>
+</div>
+<form class="" action="register" method="post"></form>
+
+{{#if this.err_msg}}
+  <h2>{{this.err_msg}}</h2>
+{{/if}}
