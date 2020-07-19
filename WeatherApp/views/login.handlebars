@@ -1,0 +1,28 @@
+<script src="/js/inputValidation.js"></script>
+<script src="/js/showAlert.js"></script>
+
+<div class="login">
+  <form class="" action="login" method="post"
+       onSubmit="return usernameAndPasswordValidation();">
+    <input type="text" 
+           id="inputUserName" 
+           name="username" 
+           value="{{this.username}}"><br />
+    <label for="inputUserName"> Username </label><br />
+    <input type="password" id="inputPassword" name="password"><br />
+    <label for="inputPassword"> Password </label><br />
+    <input type="submit" name="login" value="Login" <br />
+  </form>
+</div>
+<form class="" action="login" method="post"></form>
+
+<div class="register">
+  <form class="" action="register" method="post";">
+    <input type="submit" name="register" value="Register" <br />
+  </form>
+</div>
+<form class="" action="register" method="post"></form>
+
+{{#if this.err_msg}}
+  <h2>{{this.err_msg}}</h2>
+{{/if}}
