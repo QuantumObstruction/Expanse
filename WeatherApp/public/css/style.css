@@ -162,6 +162,12 @@ li {
 	color: rgba(0,0,0,0.5);
 }
 
+#password2 {
+	margin-bottom: 20px;
+	font-style: italic;
+	color: rgba(0,0,0,0.5);
+}
+
 #register {
 	text-decoration-line: underline;
 	font-size: 20px;
