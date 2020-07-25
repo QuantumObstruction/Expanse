@@ -90,7 +90,14 @@
 <aside>
   <div id="aside-text">
     <h3>Today's Forecast</h3>
-    <p>Information is here</p>
+    <p>
+    {{#if this.weather_city}}
+    The current temperature in {{this.weather_city}} is 
+    {{this.weather_current_temp}} degrees.
+    {{else}}
+    Information is here
+    {{/if}} 
+    </p>
     <div class="icons">
       <i class='fas fa-cloud-rain'></i>
       <i class='fas fa-cloud-sun'></i>
