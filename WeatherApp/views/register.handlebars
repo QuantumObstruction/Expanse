@@ -3,40 +3,45 @@
 
 <form id="login-form" style="margin-top: -20px;"
       action="register" method="post"
-      onSubmit="return usernameAndPasswordValidation();>
+      onSubmit="return usernameAndPassword2Validation();">
   <div class="container">
     <p style="font-size: 23px; font-style: italic; text-align: center;">Join us to always be aware of weather</p>
     <div style="margin-left: 40px; margin-top: -120px;">
-    <div style="margin-left: 40px; margin-top: -57px;">
-    <input type="text" 
+      <div style="margin-left: 40px; margin-top: -200px;">
+        <input type="text" 
            name="email" 
            id="username" 
            class="login-form-input" 
            placeholder="Email" 
            value="{{this.emailAddr}}"
-           style="margin-bottom: -147px;">
-    <input type="text" 
+           style="margin-bottom: -200px;">
+        <input type="text" 
            name="username" 
            id="username" 
            class="login-form-input" 
            placeholder="Username" value="{{this.username}}">
-    <input type="password" 
+        <input type="password" 
            name="password" 
            id="password" 
            class="login-form-input" 
            placeholder="Password">
-    <input type="password" 
+        <input type="password" 
            name="password2" 
            id="password2" 
            class="login-form-input" 
            placeholder="Confirm password" 
            style="margin-top: -7px;">
-  </div>
-    <input type="submit" 
+      </div>
+      <input type="submit" 
            id="login" 
            name="submit" 
            value="Register" 
            style="width: 110px; margin-left: 220px; margin-bottom: 4px;">
+  </div>
+</form>
+<form id="login-form" style="margin-top: -1px;"
+      action="register" method="post">
+  <div class="container2">
     <input type="submit"
            class="register"
            id="register"

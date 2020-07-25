@@ -192,6 +192,14 @@ li {
 	margin-top: 40px;
 }
 
+.container2 {
+	background: rgba(122, 130, 136, 0.2);
+	padding: 50px;
+	padding-top: 1px;
+	padding-bottom: 40px;
+	margin-top: 0px;
+}
+
 #avatar {
 	width: 70px;
 	height: 70px;
