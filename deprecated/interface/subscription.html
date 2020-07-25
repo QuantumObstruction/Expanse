@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<title>Subscribe</title>		
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+
+		<center><h4 class="title" style="color:#DC143C; font-size:300%;">Weather App</h4>
+		<h4 class="title" style="color:#B22222; font-style:italic; font-size:130%;">by Expanse</h4></center>
+	</head>
+	<body>
+
+	<script>
+		$(function(){
+			$(document).on("click", ".form_submit", function(e) {
+				e.preventDefault();
+
+				//validate 
+				var emailz = $("#email").val();
+				var emailp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+				
+				if (email=='')
+					alert("Please enter your email address");
+				else if (!emailp.test(emailz))		
+					alert("Please enter a valid email");
+				else {              
+				    //Built a url to send
+				    var info = $("#subscribe").serialize();
+				    $.ajax({
+				        type: "POST",
+				        url: "subscribe.php",
+				        data: info,
+				        success: function(result){     
+				              $('#form_results').html(html); 
+				        }
+				    });     
+				    e.preventDefault(); 
+		    	}
+			});
+		});
+</script>
+
+	<form action="subscribe.php" method="POST" class="subscribe" id="login-form" style="margin-top: -20px; margin-left: 20px;">
+		<div class="container">
+			<p style="font-size: 23px; font-style: italic; text-align: center;">Where do you want to get the weekly weather forecast?</p>
+			
+			<div style="margin-left: 150px;">
+				<input type="email" id="email" placeholder="Enter you email" class="login-form-input" name="email" required>
+				
+
+				<button  id="login" class="form_submit" type=button style="width: 140px; margin-left: 180px; margin-bottom: -20px; margin-top: 15px;">Subscribe Me</button>
+				<a href="index.html" id="register" style="font-size: 18px; font-style: italic; margin-top: 14px; margin-bottom: -15px; margin-left: 218px;">Go Back</a>
+			</div>
+			<div id="form_results"></div>
+		</div>
+	</form>
+
+<!--onclick="location.href='index.html'"-->
+	</body>
+</html>
+
