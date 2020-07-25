@@ -1,3 +1,38 @@
+Temporary Installation steps:
+
+# Start VPN to access OSU web page (like you've done in previous classes)
+log in to OSU flip server
+# clone repository from github or pull latest
+git clone https://github.com/QuantumObstruction/Expanse .
+or 
+git pull
+# switch to the belknap branch
+git checkout belknap
+# go to the sql folder
+cd sql
+# run the following commands to restore the database to
+# its initial state (this will affect everyone using the
+# database, but at this point, that's only me (James))
+mysql -u cs361_belknapj -h classmysql.engr.oregonstate.edu -p
+enter password: expanse
+source weatherapp_db_create.sql
+# If there are any errors, then we need to debug the problem.
+# Otherwise, return to regular linux prompt
+exit
+# go to the WeatherApp folder
+cd ../WeatherApp
+# install packages needed to run app
+npm install
+npm install request
+# change the port number in weatherApp.js if you need to
+# then start the app
+node weatherApp.js
+# you should be able to access the login page at (assuming you are 
+# using port 54322):
+https://flip.engr.oregonstate.edu:54322
+
+
+
 This is my proposal for structuring the software 
 to make it easier to divide up the work for the team.
 

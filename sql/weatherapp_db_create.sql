@@ -12,12 +12,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 SELECT 'Creating Users table' as '';
 
 CREATE TABLE `Users` (
+`user_id` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
 `username` varchar(255) NOT NULL UNIQUE,
 `password` varchar(255) NOT NULL,
 `email_addr` varchar(255) DEFAULT NULL,
 `max_locs` int(11) DEFAULT 5,
 `admin_flag` boolean DEFAULT false,
-PRIMARY KEY (`username`)
+PRIMARY KEY (`user_id`)
 );
 
 -- Team members will have admin privileges
@@ -51,19 +52,19 @@ SELECT * FROM CodeLocations;
 SELECT 'Creating UserCodeLocations table' as '';
 
 CREATE TABLE `UserCodeLocations` (
-`username` varchar(255) NOT NULL,
+`user_id` int(11) NOT NULL,
 `code_id` int(11) NOT NULL,
-PRIMARY KEY (`username`, `code_id`),
-FOREIGN KEY (`username`) REFERENCES Users(`username`) ON DELETE NO ACTION,
+PRIMARY KEY (`user_id`, `code_id`),
+FOREIGN KEY (`user_id`) REFERENCES Users(`user_id`) ON DELETE NO ACTION,
 FOREIGN KEY (`code_id`) REFERENCES CodeLocations(`code_id`) ON DELETE NO ACTION
 );
 
 -- Connect belknapj to zip code
-INSERT INTO `UserCodeLocations` (`username`, `code_id`) VALUES
-('belknapj', 1)
+INSERT INTO `UserCodeLocations` (`user_id`, `code_id`) VALUES
+((SELECT user_id FROM Users WHERE username = 'belknapj'), 
+ (SELECT code_id FROM CodeLocations WHERE zipcode = '75028')
+)
 ;
-
-SELECT * FROM UserCodeLocations;
 
 -- Create CityLocations table
 SELECT 'Creating CityLocations table' as '';
@@ -91,19 +92,50 @@ SELECT * FROM CityLocations;
 SELECT 'Creating UserCityLocations table' as '';
 
 CREATE TABLE `UserCityLocations` (
-`username` varchar(255) NOT NULL,
+`user_id` int(11) NOT NULL,
 `city_id` int(11) NOT NULL,
-PRIMARY KEY (`username`, `city_id`),
-FOREIGN KEY (`username`) REFERENCES Users(`username`) ON DELETE NO ACTION,
+PRIMARY KEY (`user_id`, `city_id`),
+FOREIGN KEY (`user_id`) REFERENCES Users(`user_id`) ON DELETE NO ACTION,
 FOREIGN KEY (`city_id`) REFERENCES CityLocations(`city_id`) ON DELETE NO ACTION
 );
 
 -- Connect belknapj to previous residences
-INSERT INTO `UserCityLocations` (`username`, `city_id`) VALUES
-('belknapj', 1)
-,('belknapj', 2)
-,('belknapj', 3)
-,('belknapj', 4)
+INSERT INTO `UserCityLocations` (`user_id`, `city_id`) VALUES
+ ((SELECT user_id FROM Users WHERE username = 'belknapj'),
+  (SELECT city_id FROM CityLocations 
+   WHERE city = 'Denton'
+   AND state = 'TX'
+   AND country = 'US'  
+ ))
+,((SELECT user_id FROM Users WHERE username = 'belknapj'),
+ (SELECT city_id FROM CityLocations 
+  WHERE city = 'Monticello'
+  AND state = 'AR'
+  AND country = 'US'  
+))
+,((SELECT user_id FROM Users WHERE username = 'belknapj'),
+ (SELECT city_id FROM CityLocations 
+  WHERE city = 'Pine Bluff'
+  AND state = 'AR'
+  AND country = 'US'  
+))
+,((SELECT user_id FROM Users WHERE username = 'belknapj'),
+ (SELECT city_id FROM CityLocations 
+  WHERE city = 'San Antonio'
+  AND state = 'TX'
+  AND country = 'US'  
+))
 ;
 
-SELECT * FROM UserCityLocations;
+-- Perform selects to test joins
+SELECT username, zipcode FROM CodeLocations
+INNER JOIN UserCodeLocations 
+ON UserCodeLocations.code_id = CodeLocations.code_id
+INNER JOIN Users
+ON Users.user_id = UserCodeLocations.user_id;
+
+SELECT username, city, state, country FROM CityLocations
+INNER JOIN UserCityLocations 
+ON UserCityLocations.city_id = CityLocations.city_id
+INNER JOIN Users
+ON Users.user_id = UserCityLocations.user_id;

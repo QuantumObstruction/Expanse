@@ -2,7 +2,7 @@
 // weatherApp (main app)
 //================================================================= 
 
-var dbEmulation = true;
+var dbEmulation = false;
 
 var express = require('express');
 var mysql = require('./dbcon.js');
@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 54321);
+app.set('port', 54322);
 
 app.use('/', require('./routes/login'));
 app.use('/login', require('./routes/login'));
@@ -31,7 +31,6 @@ app.use('/register', require('./routes/register'));
 //================================================================= 
 
 app.use(function(req,res){
-  console.log(req.body);
   res.status(404);
   res.render('404');
 });
@@ -48,7 +47,9 @@ app.use(function(err, req, res, next){
 //================================================================= 
 
 app.listen(app.get('port'), function(){
-  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+  console.log('Express started on port ' + 
+              app.get('port') + 
+              '; press Ctrl-C to terminate.');
 });
 
 //=================================================================
