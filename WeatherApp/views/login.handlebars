@@ -1,27 +1,36 @@
-<script src="/js/inputValidation.js"></script>
-<script src="/js/showAlert.js"></script>
+<center><h4 class="title" style="color:#DC143C; font-size:300%;">Weather App</h4>
+<h4 class="title" style="color:#B22222; font-style:italic; font-size:130%;">by Expanse</h4></center>
 
-<div class="login">
-  <form class="" action="login" method="post"
-       onSubmit="return usernameAndPasswordValidation();">
-    <input type="text" 
-           id="inputUserName" 
-           name="username" 
-           value="{{this.username}}"><br />
-    <label for="inputUserName"> Username </label><br />
-    <input type="password" id="inputPassword" name="password"><br />
-    <label for="inputPassword"> Password </label><br />
-    <input type="submit" name="login" value="Login" <br />
-  </form>
-</div>
-<form class="" action="login" method="post"></form>
-
-<div class="register">
-  <form class="" action="register" method="post";">
-    <input type="submit" name="register" value="Register" <br />
-  </form>
-</div>
-<form class="" action="register" method="post"></form>
+<form id="login-form" action="login" method="post"
+      onSubmit="return usernameAndPasswordValidation();">
+  <div class="container">
+    <p style="font-size: 30px; font-style: italic; text-align: center; margin-bottom: -100px;">Welcome</p>
+    <div style="margin-left: -25px; margin-right: -5px;">
+      <div style="margin-left: 25px;">
+        <input type="text" 
+               name="username" 
+               id="username" 
+               class="login-form-input" 
+               placeholder="Username">
+        <input type="password" 
+               name="password" 
+               id="password" 
+               class="login-form-input" 
+               placeholder="Password">
+      </div>
+      <input type="submit" 
+             id="login" 
+             name="login" 
+             value="Login" />
+      <input type="submit"
+             class="register"
+             id="register"
+             style="font-size: 19px;"             
+             name="login" 
+             value="Register" />
+    </div>
+  </div>
+</form>
 
 {{#if this.err_msg}}
   <h2>{{this.err_msg}}</h2>

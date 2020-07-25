@@ -8,18 +8,18 @@ var pool = mysql.createPool({
   // database        : 'cs361_belknapj'
   
   // I use this to test on a MariaDB on my local PC for testing
-  // host            : 'localhost',
-  // user            : 'root',
-  // password        : 'Rebec@28',
-  // database        : 'test'
+  host            : 'localhost',
+  user            : 'root',
+  password        : 'Rebec@28',
+  database        : 'test'
   
   // Use these settings to emulate successful db accesses 
   // for testing (remember to set dbEmulation = true in
   // weatherApp.js)
-  host            : 'localhost',
-  user            : 'root',
-  password        : 'none',
-  database        : 'none'
+  // host            : 'localhost',
+  // user            : 'root',
+  // password        : 'none',
+  // database        : 'none'
 });
 
 module.exports.pool = pool;

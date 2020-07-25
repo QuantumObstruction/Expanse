@@ -7,9 +7,9 @@ var myweather = require('../weatherapi/retrieveWeather.js')
 //================================================================= 
 function retrieveLocations(req,res) {
   console.log('retrieveLocations:');
-  context = {}
+  context = {};
   context.username = req.body.username;
-  retrieveZipCodes(req,res,context);
+  retrieveCities(req,res,context);
 }
 
 //=================================================================
@@ -17,7 +17,7 @@ function retrieveLocations(req,res) {
 //================================================================= 
 function retrieveZipCodes(req,res,context) {
   console.log('retrieveZipCodes:');
-  zipcodes = []
+  zipcodes = [];
   
   if (myapp.dbEmulation == true){
     console.log('emulated successful zip code retrieval');
@@ -25,7 +25,7 @@ function retrieveZipCodes(req,res,context) {
     // we might get with a live database.
     zipcodes.push({"zipcode":"71655"});
     zipcodes.push({"zipcode":"75028"});
-    context.zipcodes = zipcodes
+    context.zipcodes = zipcodes;
     retrieveCities(req,res,context);
     return;
   }
@@ -39,7 +39,7 @@ function retrieveZipCodes(req,res,context) {
   var values = [
     req.body.username
   ];
-  console.log(values)
+  console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
     if(err){
       console.log("ERROR SELECT !!!!");
@@ -49,6 +49,7 @@ function retrieveZipCodes(req,res,context) {
       retrieveCities(req, res, context);
     }
     else {
+      console.log('zipcode rows:')
       console.log(rows);
       if (rows.length > 0)
       {
@@ -76,7 +77,7 @@ function retrieveZipCodes(req,res,context) {
 //================================================================= 
 function retrieveCities(req,res,context) {
   console.log('retrieveCities:');
-  cities = []
+  cities = [];
   
   if (myapp.dbEmulation == true){
     console.log('emulated successful city retrieval');
@@ -94,21 +95,23 @@ function retrieveCities(req,res,context) {
                  "state":"ME",
                  "country":"US"
                  });
-    context.cities = cities
+    context.cities = cities;
     myweather.retrieveWeather(req, res, context);
     return;
   }
   
   var query = 
-    "SELECT city, state, country FROM CityLocations" +
+    "SELECT Users.user_id, city, state, country FROM Users" +
     " INNER JOIN UserCityLocations" + 
-    " ON UserCityLocations.username = ?" +
-    " WHERE UserCityLocations.city_id = CityLocations.city_id";
+    " ON UserCityLocations.user_id = Users.user_id" +
+    " INNER JOIN CityLocations" +
+    " ON UserCityLocations.city_id = CityLocations.city_id" +
+    " WHERE Users.username = ?";
   console.log(query);
   var values = [
     req.body.username
   ];
-  console.log(values)
+  console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
     if(err){
       console.log("ERROR SELECT !!!!");
@@ -118,6 +121,7 @@ function retrieveCities(req,res,context) {
       myweather.retrieveWeather(req, res, context);
     }
     else {
+      console.log('cities rows:');
       console.log(rows);
       if (rows.length > 0)
       {
@@ -129,6 +133,8 @@ function retrieveCities(req,res,context) {
                        });
         }
         context.cities = cities;
+        context.user_id = rows[0].user_id;
+        console.log('context:');
         console.log(context);
         myweather.retrieveWeather(req, res, context);
       }
@@ -136,6 +142,7 @@ function retrieveCities(req,res,context) {
       {
         console.log('no match for cities');
         context.cities = cities;
+        console.log('context:');
         console.log(context);
         myweather.retrieveWeather(req, res, context);
       }
