@@ -35,7 +35,7 @@ function retrieveCityWeather(req,res,context) {
             cities[0].state +
             ',' +
             cities[0].country +
-            '&APPID=' + 
+            '&units=imperial&APPID=' + 
             credentials.owmKey, 
             handleGet);
     
@@ -64,6 +64,8 @@ function retrieveCityWeather(req,res,context) {
         console.log(message8);
         console.log(message9);
 
+        context.weather_city = `${weather.name}`;
+        context.weather_current_temp = `${weather.main.temp}`;
         res.render('weather', context);
 
       } else {
