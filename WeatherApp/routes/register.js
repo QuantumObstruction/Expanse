@@ -19,10 +19,10 @@ router.post('/', function(req, res) {
     console.log(req.body);
     
     // ------------------------------------------------------------------  
-    if(req.body['register']){
-        console.log('handle register request');
+    if(req.body['login']){
+        console.log('handle login request');
         context = {};
-        res.render('register', context);
+        res.render('login', context);
         return;
     }
     
