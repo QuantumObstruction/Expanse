@@ -43,10 +43,6 @@ function passwordValidation() {
 }
 
 function usernameAndPasswordValidation() {
-  // Temporarily disabling this until I can figure
-  // out how to tell which of the form buttons was
-  // pressed.
-  return true;
   // Check user input for both the username and password.
   if (usernameValidation() == false) {
     return false;
@@ -68,10 +64,6 @@ function passwordValidation() {
 }
 
 function usernameAndPassword2Validation() {
-  // Temporarily disabling this until I can figure
-  // out how to tell which of the form buttons was
-  // pressed.
-  return true;
   // Check user input for both the username and password.
   if (usernameValidation() == false) {
     return false;
