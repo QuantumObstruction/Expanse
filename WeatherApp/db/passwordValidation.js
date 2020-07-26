@@ -5,14 +5,13 @@ var db_loc = require('./retrieveLocations.js');
 //=================================================================
 // Attempt to validate the user's password.
 //================================================================= 
-function passwordValidation(req,res) {
+function passwordValidation(req,res,pwcallback) {
   console.log('passwordValidation:');
-  var context = {}
-  context.username = req.body.username;
 
   if (myapp.dbEmulation == true){
     console.log('emulated successful password validation');
     db_loc.retrieveLocations(req,res);
+    pwcallback(req,res,true,"");
     return;
   }
   
@@ -29,8 +28,8 @@ function passwordValidation(req,res) {
     if(err){
       console.log("ERROR SELECT !!!!");
       console.log(err);
-      context.err_msg = "Error retrieving user data from database"
-      res.render('login', context);
+      pwcallback(req,res,false,err);
+      return;
     }
     else {
       console.log(rows);
@@ -38,13 +37,15 @@ function passwordValidation(req,res) {
       {
         // Match is found.
         console.log('match found for username/password');
-        db_loc.retrieveLocations(req,res);
+        pwcallback(req,res,true,"");
+        return;
       }
       else
       {
-        console.log('no match for username/password');
-        context.err_msg = "No match for username/password"
-        res.render('login', context);
+        err_msg = 'no match for username/password';
+        console.log(err_msg);
+        pwcallback(req_res,false,err_msg);
+        return;
       }
     }
   });

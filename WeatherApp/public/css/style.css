@@ -156,6 +156,13 @@ li {
 	color: rgba(0,0,0,0.5);
 }
 
+#email {
+	margin-bottom: 13px;
+	margin-top: 50%;
+	font-style: italic;
+	color: rgba(0,0,0,0.5);
+}
+
 #password {
 	margin-bottom: 20px;
 	font-style: italic;

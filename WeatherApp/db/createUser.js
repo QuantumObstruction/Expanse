@@ -14,7 +14,8 @@ function createUser(req,res) {
 
   if (myapp.dbEmulation == true){
     console.log('emulated successful user creation');
-    db_loc.retrieveLocations(req,res);
+    res.redirect('/weather?username=' +
+                 context.username);
     return;
   }
   
@@ -48,7 +49,9 @@ function createUser(req,res) {
     }
     else {
       console.log('username successfully created');
-      db_loc.retrieveLocations(req,res);
+      res.redirect('/weather?username=' +
+                   context.username);
+    return;
     }
   });
 }

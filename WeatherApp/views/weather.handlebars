@@ -3,7 +3,7 @@
   <div class="dropdown">
     <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
     <div id="myDropdown" class="dropdown-content">
-      <a href="#">Settings</a>
+      <a href="settings.html">Settings</a>
       <a href="#">Help</a>
       <a href="login.html">Logout</a>
     </div>
@@ -45,14 +45,36 @@
        with the list of zipcode/cities options-->
 
   <!--search tab and buttons-->
-  <input id="input" placeholder="Search by zipcode/city">
-  <button class="btn" id="searchBtn"><i class="fa fa-search"></i></button>
-  <button class="btn" id="addBtn"><i class="fa fa-plus"></i></button>
+  <form action="" method="post">
+    <input type="hidden"
+           name="username"
+           value={{this.username}}>
+    <input id="input" 
+           placeholder="Search by zipcode/city"
+           name="place">
+    <button class="btn" 
+            id="searchBtn"
+            name="search"
+            type="submit"
+            value="search">
+      <i class="fa fa-search"></i>
+    </button>
+    <button class="btn" 
+            id="addBtn"
+            name="add"
+            type="submit"
+            value="add">
+      <i class="fa fa-plus"></i>
+    </button>
+  </form>
 
   <!--a panel for forecast for saving user's favorite cities-->
   <div id="panel" class="panel panel-default">
     <div class="panel-body">
       <ul>
+        {{#each zipcodes}}
+        <li>{{this.zipcode}}</li>
+        {{/each}}
         {{#each cities}}
         <li>{{this.city}},{{this.state}},{{this.country}}</li>
         {{/each}}
