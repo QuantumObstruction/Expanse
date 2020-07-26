@@ -1,0 +1,66 @@
+DOCUMENTATION FOR SQL QUERIES
+
+Contains a list of queries utilized in the project
+
+--Insert User
+INSERT INTO Users (`username`, `password`) VALUES ('xxx', 'yyy');
+
+--Retrieve User
+SELECT * FROM Users WHERE `username` = xxx;
+
+--Remove User
+DELETE FROM User WHERE `username` = 'xxx';
+
+--Insert User with Email
+INSERT INTO Users (`username`, `password`, `email_addr`) VALUES ('xxx', 'yyy', 'zzz');
+
+--Insert Admin User
+INSERT INTO Users (`username`, `password`, `email_addr`, `admin_flag`)
+VALUES ('xxx', 'yyy', 'zzz', 'T|F');
+
+--Insert, Changing Max Locations
+INSERT INTO Users (`username`, `password`, `email_addr`, `max_locs`, `admin_flag`)
+VALUES ('xxx', 'yyy', 'zzz', 'intA', 'T|F');
+
+--Update password
+UPDATE Users SET password = 'xxx' WHERE username = 'yyy';
+
+--Update Email
+UPDATE Users SET email_addr = 'xxx' WHERE username = 'yyy;
+
+--Update Admin
+UPDATE Users SET admin_flag = 'T|F' WHERE username = 'xxx';
+
+--Update Max Locations
+UPDATE Users SET max_locs = 'intA' WHERE username = 'xxx';
+
+--Retrieve Locations
+SELECT username, zipcode FROM UserCodeLocations
+INNER JOIN CodeLocations ON UserCodeLocations.code_id = CodeLocations.code_id
+WHERE UserCodeLocations.username = 'xxx';
+
+--Delete Location <-> User Association
+DELETE FROM UserCodeLocations WHERE `username` = 'xxx';
+AND `code_id` = (SELECT code_id FROM CodeLocations WHERE zipcode = 'intA');
+
+--Insert Location
+INSERT INTO CityLocations (`city`) VALUES ('xxx');
+
+--Insert Location with Specific State
+INSERT INTO CityLocations (`city`, `state`) VALUES ('xxx', 'yyy');
+
+--Tie User Locations to Requisite User
+INSERT INTO UserCityLocations (`username`, `city_id`) VALUES ('xxx',
+(SELECT city_id FROM CityLocations WHERE city = 'xxx' AND state = 'yyy'));
+
+--Retrieve Locations
+SELECT username, city, state, country FROM UserCItyLocations
+INNER JOIN CityLocations ON UserCityLocations.city_id = CityLocations.city_id
+WHERE UserCityLocations.username = 'xxx';
+
+--Remove Locations
+DELETE FROM UserCityLocations WHERE `username` = 'xxx' AND `city_id` =
+(SELECT city_id from CityLocations WHERE city = 'xxx' AND state = 'yyy');
+
+
+
