@@ -21,12 +21,11 @@ git pull
 cd ../WeatherApp
 ### install packages needed to run app
 npm install
-npm install request
 ### then start the app
 node weatherApp.js
 ### you should be able to access the login page at (assuming you are using port 54322):
-https://flip.engr.oregonstate.edu:54322
-
+127.0.0.1:54322/
 ### else if port busy change the port number in weatherApp.js
-
+  
+    
 ### login with username: "belknapj" and password: "expanse"
