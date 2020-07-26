@@ -7,7 +7,7 @@ var myweather = require('../weatherapi/retrieveWeather.js')
 //================================================================= 
 function retrieveLocations(req,res,context,callback) {
   console.log('retrieveLocations:');
-  retrieveCities(req,res,context,callback);
+  retrieveZipCodes(req,res,context,callback);
 }
 
 //=================================================================
@@ -31,10 +31,12 @@ function retrieveZipCodes(req,res,context,callback) {
   }
   
   var query = 
-    "SELECT zipcode FROM CodeLocations" +
+    "SELECT Users.user_id, zipcode FROM Users" +
     " INNER JOIN UserCodeLocations" + 
-    " ON UserCodeLocations.username = ?" +
-    " WHERE UserCodeLocations.code_id = CodeLocations.code_id";
+    " ON UserCodeLocations.user_id = Users.user_id" +
+    " INNER JOIN CodeLocations" +
+    " ON UserCodeLocations.code_id = CodeLocations.code_id" +
+    " WHERE Users.username = ?";
   console.log(query);
   var values = [
     context.username

@@ -7,12 +7,17 @@ const request = require('request');
 //================================================================= 
 function retrieveWeather(req,res,context,callback) {
   console.log('retrieveWeather:');
+  console.log('context:');
+  console.log(context);
   if ("zipcodes" in context) {
-    retrieveZipCodeWeather(req,res,context,callback);
+    if (context.zipcodes.length > 0){
+      retrieveZipCodeWeather(req,res,context,callback);
+      return;
+    }
   }
-  else {
-    retrieveCityWeather(req,res,context,callback);
-  }
+  // If no zipcodes, attempt to retrieve weather 
+  // from cities array.
+  retrieveCityWeather(req,res,context,callback);
 }
 
 //=================================================================

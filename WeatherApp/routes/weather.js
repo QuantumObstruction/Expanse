@@ -1,5 +1,6 @@
 var db_loc = require('../db/retrieveLocations.js');
 var weather_api = require('../weatherapi/retrieveWeather.js');
+var db_save = require('../db/saveLocations.js');
 
 //=================================================================
 // weather (handles gets/posts from weather page)
@@ -7,21 +8,25 @@ var weather_api = require('../weatherapi/retrieveWeather.js');
 
 var router = require('express').Router();
 
+//================================================================= 
 router.get('/', function(req, res) {
   console.log('weather get /');
   handle_get(req, res);
 });
 
+//-----------------------------------------------------------
 router.get('/weather', function(req, res) {
   console.log('weather get /weather');
   handle_get(req, res);
 });
 
+//-----------------------------------------------------------
 router.get('/weather.html', function(req, res) {
   console.log('weather get /weather.html');
   handle_get(req, res);
 });
 
+//-----------------------------------------------------------
 function handle_get(req, res){
   console.log('req.body:');
   console.log(req.query);
@@ -34,6 +39,7 @@ function handle_get(req, res){
   return;
 }
 
+//-----------------------------------------------------------
 function loc_callback(req,res,context){
   console.log('loc_callback:');
   // Now that we've retrieve the user's locations,
@@ -43,12 +49,14 @@ function loc_callback(req,res,context){
   return;
 }
 
+//-----------------------------------------------------------
 function weather_callback(req,res,context){
   console.log('weather_callback:');
   res.render('weather', context);
   return;
 }
 
+//================================================================= 
 router.post('/', function(req, res) {
     console.log('weather post / req.body:')
     console.log(req.body);
@@ -59,11 +67,18 @@ router.post('/', function(req, res) {
       return;
     }
 
+    // ------------------------------------------------------------------  
+    if(req.body['add']){
+      handle_add(req,res);
+      return;
+    }
+
     var context = {};
     context.title = "weather";
     res.render('weather', context);
 });
 
+//----------------------------------------------------
 function handle_search(req,res){
   console.log('handle_search');
   context = {};
@@ -87,6 +102,31 @@ function handle_search(req,res){
     
   weather_api.retrieveWeather(req,res,context,
                               weather_callback);
+  return;
+}
+
+//----------------------------------------------------
+function handle_add(req,res){
+  console.log('handle_add');
+  context = {};
+  context.title = "weather";
+  context.username = req.body.username;
+  place = req.body.place.split(",");
+  context.place = place;
+  // Did user provide zipcode or city?
+  if (isNaN(place[0])){
+    db_save.saveCity(req,res,context,add_callback);
+  }
+  else {
+    db_save.saveZipCode(req,res,context,add_callback);
+  }
+  return;
+}
+
+//----------------------------------------------------
+function add_callback(req,res,context){
+  console.log('add_callback');
+  db_loc.retrieveLocations(req,res,context,loc_callback);
   return;
 }
 

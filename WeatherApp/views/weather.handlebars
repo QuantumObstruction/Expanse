@@ -72,6 +72,9 @@
   <div id="panel" class="panel panel-default">
     <div class="panel-body">
       <ul>
+        {{#each zipcodes}}
+        <li>{{this.zipcode}}</li>
+        {{/each}}
         {{#each cities}}
         <li>{{this.city}},{{this.state}},{{this.country}}</li>
         {{/each}}
