@@ -5,28 +5,28 @@ var myweather = require('../weatherapi/retrieveWeather.js')
 //=================================================================
 // Attempt to retrieve the user's saved locations.
 //================================================================= 
-function retrieveLocations(req,res) {
+function retrieveLocations(req,res,context,callback) {
   console.log('retrieveLocations:');
-  context = {};
-  context.username = req.body.username;
-  retrieveCities(req,res,context);
+  retrieveCities(req,res,context,callback);
 }
 
 //=================================================================
 // Attempt to retrieve the user's saved zip codes.
 //================================================================= 
-function retrieveZipCodes(req,res,context) {
+function retrieveZipCodes(req,res,context,callback) {
   console.log('retrieveZipCodes:');
-  zipcodes = [];
+  if (!("zipcodes" in context)) {
+    zipcodes = [];
+    context.zipcodes = zipcodes;
+  }
   
   if (myapp.dbEmulation == true){
     console.log('emulated successful zip code retrieval');
     // Plug in some representative zipcodes like
     // we might get with a live database.
-    zipcodes.push({"zipcode":"71655"});
-    zipcodes.push({"zipcode":"75028"});
-    context.zipcodes = zipcodes;
-    retrieveCities(req,res,context);
+    context.zipcodes.push({"zipcode":"71655"});
+    context.zipcodes.push({"zipcode":"75028"});
+    retrieveCities(req,res,context,callback);
     return;
   }
   
@@ -37,7 +37,7 @@ function retrieveZipCodes(req,res,context) {
     " WHERE UserCodeLocations.code_id = CodeLocations.code_id";
   console.log(query);
   var values = [
-    req.body.username
+    context.username
   ];
   console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
@@ -46,7 +46,8 @@ function retrieveZipCodes(req,res,context) {
       console.log(err);
       context.err_msg = "Error retrieving zip codes from database"
       context.zipcodes = zipcodes;    
-      retrieveCities(req, res, context);
+      retrieveCities(req, res, context, callback);
+      return;
     }
     else {
       console.log('zipcode rows:')
@@ -55,17 +56,18 @@ function retrieveZipCodes(req,res,context) {
       {
         for (var x in rows)
         {
-          zipcodes.push({"zipcode":rows[x].zipcode
+          context.zipcodes.push({"zipcode":rows[x].zipcode
                     });
         }
-        context.zipcodes = zipcodes;    
-        retrieveCities(req, res, context);
+        retrieveCities(req, res, context, callback);
+        return;
       }
       else
       {
         console.log('no match for zip codes');
         context.zipcodes = zipcodes;    
-        retrieveCities(req, res, context);
+        retrieveCities(req, res, context, callback);
+        return;
       }
     }
   });
@@ -75,9 +77,12 @@ function retrieveZipCodes(req,res,context) {
 //=================================================================
 // Attempt to retrieve the user's saved city information.
 //================================================================= 
-function retrieveCities(req,res,context) {
+function retrieveCities(req,res,context,callback) {
   console.log('retrieveCities:');
-  cities = [];
+  if (!("cities" in context)) {
+    cities = [];
+    context.cities = cities;
+  }
   
   if (myapp.dbEmulation == true){
     console.log('emulated successful city retrieval');
@@ -97,6 +102,7 @@ function retrieveCities(req,res,context) {
                  });
     context.cities = cities;
     myweather.retrieveWeather(req, res, context);
+    callback(req, res, context);
     return;
   }
   
@@ -109,7 +115,7 @@ function retrieveCities(req,res,context) {
     " WHERE Users.username = ?";
   console.log(query);
   var values = [
-    req.body.username
+    context.username
   ];
   console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
@@ -118,7 +124,8 @@ function retrieveCities(req,res,context) {
       console.log(err);
       context.err_msg = "Error retrieving cities from database"
       console.log(context);
-      myweather.retrieveWeather(req, res, context);
+      callback(req, res, context);
+      return;
     }
     else {
       console.log('cities rows:');
@@ -136,7 +143,7 @@ function retrieveCities(req,res,context) {
         context.user_id = rows[0].user_id;
         console.log('context:');
         console.log(context);
-        myweather.retrieveWeather(req, res, context);
+        callback(req, res, context);
       }
       else
       {
@@ -144,7 +151,7 @@ function retrieveCities(req,res,context) {
         context.cities = cities;
         console.log('context:');
         console.log(context);
-        myweather.retrieveWeather(req, res, context);
+        callback(req, res, context);
       }
     }
   });

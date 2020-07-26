@@ -25,6 +25,11 @@ app.use('/login.html', require('./routes/login'));
 app.use('/index', require('./routes/login'));
 app.use('/index.html', require('./routes/login'));
 app.use('/register', require('./routes/register'));
+app.use('/register.html', require('./routes/register'));
+app.use('/settings', require('./routes/settings'));
+app.use('/settings.html', require('./routes/settings'));
+app.use('/weather', require('./routes/weather'));
+app.use('/weather.html', require('./routes/weather'));
 
 //=================================================================
 // General error handlers
