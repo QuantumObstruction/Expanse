@@ -44,7 +44,7 @@ function passwordValidation(req,res,pwcallback) {
       {
         err_msg = 'no match for username/password';
         console.log(err_msg);
-        pwcallback(req_res,false,err_msg);
+        pwcallback(req,res,false,err_msg);
         return;
       }
     }
