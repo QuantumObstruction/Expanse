@@ -1,28 +1,42 @@
+
 //=================================================================
 // settings (handles gets/posts from settings page)
 //================================================================= 
 
 var router = require('express').Router();
+var db_user = require('../db/retrieveUserInfo');
 
+// ======================================================
 router.get('/', function(req, res) {
     console.log('settings get /');
-    var context = {};
-    res.render('settings', context);
+    handle_get(req, res);
 });
 
 router.get('/settings', function(req, res) {
     console.log('settings get /settings');
-    var context = {};
-    res.render('settings', context);
+    handle_get(req, res);
 });
 
 router.get('/settings.html', function(req, res) {
     console.log('settings get /settings.html');
-    var context = {};
-    res.render('settings', context);
+    handle_get(req, res);
 });
 
+// ======================================================
+function handle_get(req, res) {
+  console.log(req.query);
+  var context = {};
+  context.title = "weather";
+  context.username = req.query.username;
+  db_user.retrieveUserInfo(req,res,context,user_cb);
+}
 
+// ---------------------------------------------------
+function user_cb(req, res, context) {
+  res.render('settings', context);
+}
+
+// ======================================================
 router.post('/', function(req, res) {
     console.log('settings post / req.body:')
     console.log(req.body);

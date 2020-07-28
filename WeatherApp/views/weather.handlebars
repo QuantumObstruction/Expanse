@@ -3,7 +3,7 @@
   <div class="dropdown">
     <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
     <div id="myDropdown" class="dropdown-content">
-      <a href="settings.html">Settings</a>
+      <a href="settings.html?username={{this.username}}">Settings</a>
       <a href="#">Help</a>
       <a href="login.html">Logout</a>
     </div>
@@ -112,14 +112,9 @@
 <aside>
   <div id="aside-text">
     <h3>Today's Forecast</h3>
-    <p>
-    {{#if this.weather_city}}
-    The current temperature in {{this.weather_city}} is 
-    {{this.weather_current_temp}} degrees.
-    {{else}}
-    Information is here
-    {{/if}} 
-    </p>
+    {{#each current}}
+    <p>{{this.weather}}</p>
+    {{/each}}
     <div class="icons">
       <i class='fas fa-cloud-rain'></i>
       <i class='fas fa-cloud-sun'></i>

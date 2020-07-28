@@ -1,1 +1,16 @@
 <p>Settings TBD</p>
+<p>username: {{this.username}}</p>
+<p>email: {{this.email}}</p>
+<p>admin: {{this.admin}}</p>
+<p>max locs: {{this.max_locs}}</p>
+
+<a href="login.html" 
+   id="register" 
+   style="font-size: 18px; 
+   font-style: italic; 
+   margin-bottom: -15px; 
+   margin-left: 185px;">Logout</a>
+
+{{#if this.err_msg}}
+  <h2>{{this.err_msg}}</h2>
+{{/if}}

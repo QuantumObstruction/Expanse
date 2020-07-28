@@ -9,33 +9,35 @@ function retrieveWeather(req,res,context,callback) {
   console.log('retrieveWeather:');
   console.log('context:');
   console.log(context);
+  context.current = []
   if ("zipcodes" in context) {
     if (context.zipcodes.length > 0){
-      retrieveZipCodeWeather(req,res,context,callback);
+      retrieveZipCodeWeather(req,res,context,0,callback);
       return;
     }
   }
   // If no zipcodes, attempt to retrieve weather 
   // from cities array.
-  retrieveCityWeather(req,res,context,callback);
+  retrieveCityWeather(req,res,context,0,callback);
 }
 
 //=================================================================
 // Attempt to retrieve the weather based on saved zip codes.
 //================================================================= 
-function retrieveZipCodeWeather(req,res,context,callback) {
+function retrieveZipCodeWeather(req,res,context,idx,callback) {
   console.log('retrieveZipCodeWeather:');
-  console.log('zipcodes:')
+  console.log('zipcodes:');
   console.log(context);
   
-  if (context.zipcodes.length > 0) {
+  if (idx < context.zipcodes.length) {
     request('http://api.openweathermap.org/data/2.5/weather?zip=' +
-            context.zipcodes[0].zipcode +
+            context.zipcodes[idx].zipcode +
             '&units=imperial&APPID=' + 
             credentials.owmKey, 
             handleGet);
     
     function handleGet(err, response, body){
+      idx += 1;
       if(!err && response.statusCode < 400){
         let weather = JSON.parse(body);
         let message0 = `It's ${weather.main.temp} degrees in ${weather.name}!`;
@@ -60,19 +62,31 @@ function retrieveZipCodeWeather(req,res,context,callback) {
         console.log(message8);
         console.log(message9);
 
-        context.weather_city = `${weather.name}`;
-        context.weather_current_temp = `${weather.main.temp}`;
-        callback(req,res,context);
-        return;
+        curr_weather = 'The current temperature in ' +
+                   `${weather.name}` + 
+                   ' is ' +
+                   `${weather.main.temp}` +
+                   ' degrees.';
+        context.current.push({"weather":curr_weather});
       } else {
         console.log(err);
         console.log(response.statusCode);
-        callback(req,res,context);
-        return;
       }
+      // If there are more zipcodes, then get the weather
+      // for the next zipcode. Otherwise, attempt to get
+      // weather for city locations.
+      if (idx < context.zipcodes.length) {
+        retrieveZipCodeWeather(req,res,context,idx,callback);
+      }
+      else {
+        retrieveCityWeather(req,res,context,0,callback);
+      }
+      return;
     }
   } else {
-    callback(req,res,context);
+    // No zipcodes. Attempt to get weather for city
+    // locations.
+    retrieveCityWeather(req,res,context,0,callback);
     return;
   }
 }
@@ -80,23 +94,24 @@ function retrieveZipCodeWeather(req,res,context,callback) {
 //=================================================================
 // Attempt to retrieve the weather based on city information.
 //================================================================= 
-function retrieveCityWeather(req,res,context,callback) {
+function retrieveCityWeather(req,res,context,idx,callback) {
   console.log('retrieveCityWeather:');
-  console.log('cities:')
+  console.log('cities:');
   console.log(context);
   
-  if (context.cities.length > 0) {
+  if (idx < context.cities.length) {
     request('http://api.openweathermap.org/data/2.5/weather?q=' +
-            context.cities[0].city +
+            context.cities[idx].city +
             ',' +
-            context.cities[0].state +
+            context.cities[idx].state +
             ',' +
-            context.cities[0].country +
+            context.cities[idx].country +
             '&units=imperial&APPID=' + 
             credentials.owmKey, 
             handleGet);
     
     function handleGet(err, response, body){
+      idx += 1;
       if(!err && response.statusCode < 400){
         let weather = JSON.parse(body);
         let message0 = `It's ${weather.main.temp} degrees in ${weather.name}!`;
@@ -121,16 +136,26 @@ function retrieveCityWeather(req,res,context,callback) {
         console.log(message8);
         console.log(message9);
 
-        context.weather_city = `${weather.name}`;
-        context.weather_current_temp = `${weather.main.temp}`;
-        callback(req,res,context);
-        return;
+        curr_weather = 'The current temperature in ' +
+                   `${weather.name}` + 
+                   ' is ' +
+                   `${weather.main.temp}` +
+                   ' degrees.';
+        context.current.push({"weather":curr_weather});
       } else {
         console.log(err);
         console.log(response.statusCode);
-        callback(req,res,context);
-        return;
       }
+      // If there are more zipcodes, then get the weather
+      // for the next zipcode. Otherwise, attempt to get
+      // weather for city locations.
+      if (idx < context.cities.length) {
+        retrieveCityWeather(req,res,context,idx,callback);
+      }
+      else {
+        callback(req,res,context);
+      }
+      return;
     }
   } else {
     callback(req,res,context);
