@@ -33,7 +33,10 @@ function handle_get(req, res){
   var context = {};
   context.title = "weather";
   context.username = req.query.username;
+  context.units = req.query.units;
   console.log('context.username=' + context.username);
+  console.log('context.units=' + context.units);
+  
   // Retrieve the user's saved locations
   db_loc.retrieveLocations(req,res,context,loc_callback);
   return;
@@ -44,6 +47,7 @@ function loc_callback(req,res,context){
   console.log('loc_callback:');
   // Now that we've retrieve the user's locations,
   // we can retrieve the user's weather.
+  context.units = 'imperial';
   weather_api.retrieveWeather(req,res,context,
                               weather_callback);
   return;
@@ -72,11 +76,29 @@ router.post('/', function(req, res) {
       handle_add(req,res);
       return;
     }
+    
+   if(req.body['units']) {
+     handle_units(req,res);
+     return;
+    }
 
     var context = {};
     context.title = "weather";
     res.render('weather', context);
 });
+
+//----------------------------------------------------
+function handle_units(req,res){
+  console.log('handle_units');
+  context = {};
+  context.title = "weather";
+  context.username = req.query.username;
+  context.units= req.body.units;
+  
+ db_loc.retrieveLocations(req,res,context,loc_callback);
+  return;
+}
+
 
 //----------------------------------------------------
 function handle_search(req,res){
