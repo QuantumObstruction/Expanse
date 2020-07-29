@@ -1,0 +1,17 @@
+<!--a seperate field for today's weather-->
+<aside>
+  <div id="aside-text">
+<h3 style="margin-top: -70px; margin-bottom: -30px;">Today's Forecast</h3>
+    {{#each current}}
+    <p>{{this.weather}}</p>
+    {{/each}}
+    <div class="icons">
+      <i class='fas fa-cloud-rain'></i>
+      <i class='fas fa-cloud-sun'></i>
+      <i class='fas fa-cloud-sun-rain'></i>
+      <i class='fas fa-cloud-moon-rain'></i>
+      <i class='fas fa-sun'></i>
+      <i class='fas fa-snowflake'></i>
+    </div>
+  </div>
+</aside>

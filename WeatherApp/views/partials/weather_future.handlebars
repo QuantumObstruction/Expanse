@@ -1,0 +1,21 @@
+<!--days of the week, starting with today-->
+<p id="weekdays"></p>
+<script>
+  var day = "";
+  var wDay = new Array(7);
+  
+  wDay[0] = "Sunday";
+  wDay[1] = "Monday";
+  wDay[2] = "Tuesday";
+  wDay[3] = "Wednesday";
+  wDay[4] = "Thursday";
+  wDay[5] = "Friday";
+  wDay[6] = "Saturday";
+
+  var today = new Date().getDay();
+  for(var i=0; i<wDay.length; i++) {
+    day += "<br/>" + wDay[(i+today)%wDay.length] + '<p style="margin:-5px;"></p>';
+  }
+
+  document.getElementById("weekdays").innerHTML = day;
+</script>
