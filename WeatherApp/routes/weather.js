@@ -33,7 +33,10 @@ function handle_get(req, res){
   var context = {};
   context.title = "weather";
   context.username = req.query.username;
+  context.units = "imperial";
   console.log('context.username=' + context.username);
+  console.log('context.units=' + context.units);
+  
   // Retrieve the user's saved locations
   db_loc.retrieveLocations(req,res,context,loc_callback);
   return;
@@ -72,11 +75,29 @@ router.post('/', function(req, res) {
       handle_add(req,res);
       return;
     }
+    
+   if(req.body['units']) {
+     handle_units(req,res);
+     return;
+    }
 
     var context = {};
     context.title = "weather";
     res.render('weather', context);
 });
+
+//----------------------------------------------------
+function handle_units(req,res){
+  console.log('handle_units');
+  context = {};
+  context.title = "weather";
+  context.username = req.query.username;
+  context.units= req.body.units;
+  
+ db_loc.retrieveLocations(req,res,context,loc_callback);
+  return;
+}
+
 
 //----------------------------------------------------
 function handle_search(req,res){

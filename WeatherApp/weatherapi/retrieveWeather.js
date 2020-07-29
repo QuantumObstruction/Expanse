@@ -32,7 +32,7 @@ function retrieveZipCodeWeather(req,res,context,idx,callback) {
   if (idx < context.zipcodes.length) {
     request('http://api.openweathermap.org/data/2.5/weather?zip=' +
             context.zipcodes[idx].zipcode +
-            '&units=imperial&APPID=' + 
+            '&units='+ context.units +'&APPID=' + 
             credentials.owmKey, 
             handleGet);
     
@@ -105,7 +105,7 @@ function retrieveCityWeather(req,res,context,idx,callback) {
               context.cities[idx].state +
               ',' +
               context.cities[idx].country +
-              '&units=imperial&APPID=' + 
+              '&units='+ context.units +'&APPID=' + 
               credentials.owmKey, 
               handleGet);
       
