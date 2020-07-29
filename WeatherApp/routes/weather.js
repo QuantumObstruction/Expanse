@@ -33,7 +33,7 @@ function handle_get(req, res){
   var context = {};
   context.title = "weather";
   context.username = req.query.username;
-  context.units = req.query.units;
+  context.units = "imperial";
   console.log('context.username=' + context.username);
   console.log('context.units=' + context.units);
   
@@ -47,7 +47,6 @@ function loc_callback(req,res,context){
   console.log('loc_callback:');
   // Now that we've retrieve the user's locations,
   // we can retrieve the user's weather.
-  context.units = 'imperial';
   weather_api.retrieveWeather(req,res,context,
                               weather_callback);
   return;
