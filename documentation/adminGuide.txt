@@ -1,0 +1,1 @@
+To access administartor functions click on the actions menu icon in the upper left hand corner and select options. From the options screen if you have administrator status you can change the maximum number of weather locations.
