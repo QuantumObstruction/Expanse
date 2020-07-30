@@ -1,0 +1,64 @@
+Weather API (OpenWeather)
+https://openweathermap.org/current
+
+API Key
+843397ebf59e59ab18f5e5733c88938e
+
+Great Tutorial for initial setup
+https://codeburst.io/build-a-simple-weather-app-with-node-js-in-just-16-lines-of-code-32261690901d
+
+Node.js/npm install instructions
+Node.js install with nvm (A more robust approach to having access to node.js versions)
+https://nodesource.com/blog/installing-node-js-tutorial-using-nvm-on-mac-os-x-and-ubuntu/
+
+API Documentation
+
+JSON object denoted by 'obj'
+Returns basic weather data to be used in implementation
+To call using API create obj 'obj' and call using methods to display
+
+    Temperature {F|C}
+    --Displays current temperature
+	obj.main.temp
+	
+    City
+    --Displays current city
+	obj.name
+	
+    Description
+    --Displays current weather description
+	obj.weather[0].description
+	
+    Feels-Like
+    --Displays current 'feels-like' description
+	obj.main.feels_like
+	
+    Max Temp {F|C}
+    --Displays current high temperature
+    	obj.main.temp_max
+	
+    Min Temp {F|C}
+    --Displays current low temperature
+    	obj.main.temp_min
+	
+    Pressure {hPa}
+    --Displays current pressure
+	obj.main.pressure
+	
+    Humidity {%}
+    --Displays current humidity
+	obj.main.humidity
+	
+    Visibility {m}
+    --Displays current visibility status
+	obj.main.visibility
+	
+    Wind Speed {mi/h|m/s}
+    --Displays current wind speed
+    	 obj.wind.speed
+
+    Precipitation {mm}
+    --Displays current precipitation values
+	obj.rain.{1h|3h}
+	obj.snow.{1h|3h}
+

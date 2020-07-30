@@ -1,7 +1,8 @@
 function invalidCharCheck(str) {
-  var text = /^[a-zA-Z0-9?* -]+$/;
+  var text = /^[@a-zA-Z0-9?* -]+$/;
   if (! text.test(str)) {
-    alert("Sorry, input value contains a character outside the allowed character set");
+    alert("Sorry, input value contains a character outside the allowed character set:" +
+          str);
     return false;
   }
   return true;
@@ -30,6 +31,18 @@ function usernameValidation() {
   return true;
 }
 
+function emailValidation() {
+  var email = document.getElementById("email").value;
+  if (email == '') {
+    // email address is not required
+    return true;
+  }
+  if (invalidCharCheck(email) == false) {
+    return false;
+  }
+  return true;
+}
+
 function passwordValidation() {
   var password = document.getElementById("password").value;
   if (password == '') {
@@ -43,10 +56,6 @@ function passwordValidation() {
 }
 
 function usernameAndPasswordValidation() {
-  // Temporarily disabling this until I can figure
-  // out how to tell which of the form buttons was
-  // pressed.
-  return true;
   // Check user input for both the username and password.
   if (usernameValidation() == false) {
     return false;
@@ -60,23 +69,22 @@ function usernameAndPasswordValidation() {
 function passwordValidation() {
   var password1 = document.getElementById("password").value;
   var password2 = document.getElementById("password2").value;
-  if (password != password2) {
-    alert("Passwords don't match");
-    return false;
+  if password1.localeCompare(password2) {
+    return true;
   }
-  return true;
+  alert("Passwords don't match");
+  return false;
 }
 
 function usernameAndPassword2Validation() {
-  // Temporarily disabling this until I can figure
-  // out how to tell which of the form buttons was
-  // pressed.
-  return true;
   // Check user input for both the username and password.
   if (usernameValidation() == false) {
     return false;
   }
   if (passwordValidation() == false) {
+    return false;
+  }
+  if (emailValidation() == false) {
     return false;
   }
   return true;

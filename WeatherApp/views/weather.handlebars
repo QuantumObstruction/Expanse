@@ -3,7 +3,7 @@
   <div class="dropdown">
     <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
     <div id="myDropdown" class="dropdown-content">
-      <a href="#">Settings</a>
+      <a href="settings.html?username={{this.username}}">Settings</a>
       <a href="#">Help</a>
       <a href="login.html">Logout</a>
     </div>
@@ -45,14 +45,45 @@
        with the list of zipcode/cities options-->
 
   <!--search tab and buttons-->
-  <input id="input" placeholder="Search by zipcode/city">
-  <button class="btn" id="searchBtn"><i class="fa fa-search"></i></button>
-  <button class="btn" id="addBtn"><i class="fa fa-plus"></i></button>
+  <form action="" method="post">
+    <input type="hidden"
+           name="username"
+           value={{this.username}}>
+    <input id="input" 
+           placeholder="Search by zipcode/city"
+           name="place">
+    <button class="btn" 
+            id="searchBtn"
+            name="search"
+            type="submit"
+            value="search">
+      <i class="fa fa-search"></i>
+    </button>
+    <button class="btn" 
+            id="addBtn"
+            name="add"
+            type="submit"
+            value="add">
+      <i class="fa fa-plus"></i>
+    </button>
+ 
+  </form> 
+  
+ <form action="" method="post" >
+     <select id="units" name="units" value = 'imperial'>
+     <option value = "imperial">Fahrenheit</option>
+     <option value = "metric">Celsius</option>
+    </select>
+    <input type="submit" value="Select Units" />
+</form>
 
   <!--a panel for forecast for saving user's favorite cities-->
   <div id="panel" class="panel panel-default">
     <div class="panel-body">
       <ul>
+        {{#each zipcodes}}
+        <li>{{this.zipcode}}</li>
+        {{/each}}
         {{#each cities}}
         <li>{{this.city}},{{this.state}},{{this.country}}</li>
         {{/each}}
@@ -68,6 +99,7 @@
   <script>
     var day = "";
     var wDay = new Array(7);
+    
     wDay[0] = "Sunday";
     wDay[1] = "Monday";
     wDay[2] = "Tuesday";
@@ -89,15 +121,10 @@
 <!--a seperate field for today's weather-->
 <aside>
   <div id="aside-text">
-    <h3>Today's Forecast</h3>
-    <p>
-    {{#if this.weather_city}}
-    The current temperature in {{this.weather_city}} is 
-    {{this.weather_current_temp}} degrees.
-    {{else}}
-    Information is here
-    {{/if}} 
-    </p>
+<h3 style="margin-top: -70px; margin-bottom: -30px;">Today's Forecast</h3>
+    {{#each current}}
+    <p>{{this.weather}}</p>
+    {{/each}}
     <div class="icons">
       <i class='fas fa-cloud-rain'></i>
       <i class='fas fa-cloud-sun'></i>

@@ -156,6 +156,13 @@ li {
 	color: rgba(0,0,0,0.5);
 }
 
+#email {
+	margin-bottom: 13px;
+	margin-top: 50%;
+	font-style: italic;
+	color: rgba(0,0,0,0.5);
+}
+
 #password {
 	margin-bottom: 20px;
 	font-style: italic;
@@ -190,6 +197,14 @@ li {
 	padding-top: 1px;
 	padding-bottom: 40px;
 	margin-top: 40px;
+}
+
+.container2 {
+	background: rgba(122, 130, 136, 0.2);
+	padding: 50px;
+	padding-top: 1px;
+	padding-bottom: 40px;
+	margin-top: 0px;
 }
 
 #avatar {
