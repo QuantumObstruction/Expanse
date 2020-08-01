@@ -6,6 +6,26 @@ body {
   /* background-size: cover; */
 }
 
+#table {
+  list-style-type: none;
+}
+
+li {
+ display: inline-block;
+}
+
+#this {
+  margin-left: -40px;
+  color: #ee4466;
+  font-weight: bold;
+}
+
+#weatherTitle {
+  text-decoration: underline;
+  font-size: 28px;
+  margin-bottom: -10px;
+  margin-top: 13px;
+}
 
 main {
 	width: 62%;
