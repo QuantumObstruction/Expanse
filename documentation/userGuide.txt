@@ -1,0 +1,12 @@
+1. First Steps
+  I.   Registration
+  II.  Login
+	A. Logout / changing users
+  III. Settings
+
+2. Interface
+  I.   Checking weather
+  II.  Saving favorite locations
+  III. Removing locations from favorites
+  IV.  Interface menu
+  V.   Five day forecast
