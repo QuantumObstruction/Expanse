@@ -1,0 +1,93 @@
+<!--a seperate field for today's weather-->
+<aside>
+  <div id="aside-text">
+<h3 style="margin-top: -70px; margin-bottom: -30px;">Today's Forecast</h3>
+
+<form action="" method="post" style="margin-top: 35px; margin-left: 270px; margin-bottom: -10px;">
+  <select id="units" name="units" value="imperial" style="border-radius:36px;
+  overflow:hidden;">
+    <option value="imperial">Fahrenheit</option>
+    <option value="metric">Celsius</option>
+  </select>
+  <input type="submit" value="Select Units" style="background-color: #DC143C; color:white; cursor: pointer; border: none; font-size: 14px; font-weight: bold;"/>
+</form>
+
+    {{#each current}}
+      <h4 id="weatherTitle"> {{this.weatherTitle}} </h4>
+    {{/each}}
+    
+    <ul id="table">
+    
+    <li>Current: </li>
+    {{#each current}}
+      <li id="this">{{this.currently}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Description: </li>
+    {{#each current}}
+      <li id="this">{{this.description}}</li>
+    {{/each}}
+
+    <br/>
+    
+    <li>Feels like: </li>
+    {{#each current}}
+      <li id="this">{{this.feelsLike}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Highest temperature: </li>
+    {{#each current}}
+      <li id="this">{{this.max}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Lowest temperature: </li>
+    {{#each current}}
+      <li id="this">{{this.min}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Pressure: </li>
+    {{#each current}}
+      <li id="this">{{this.pressure}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Humidity: </li>
+    {{#each current}}
+      <li id="this">{{this.humid}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Visibility: </li>
+    {{#each current}}
+      <li id="this">{{this.visib}}</li>
+    {{/each}}
+    
+    <br/>
+    
+    <li>Wind speed: </li>
+    {{#each current}}
+      <li id="this">{{this.wind}}</li>
+    {{/each}}
+    
+    </ul>
+
+    <div class="icons">
+      <i class='fas fa-cloud-rain'></i>
+      <i class='fas fa-cloud-sun'></i>
+      <i class='fas fa-cloud-sun-rain'></i>
+      <i class='fas fa-cloud-moon-rain'></i>
+      <i class='fas fa-sun'></i>
+      <i class='fas fa-snowflake'></i>
+    </div>
+  </div>
+</aside>

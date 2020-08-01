@@ -132,7 +132,7 @@ function retrieveCityWeather(req,res,context,idx,callback) {
         if(!err && response.statusCode < 400){
           let weather = JSON.parse(body);
           
-         let message00 = `${weather.name}`;
+          let message00 = `${weather.name}`;
           let message0 = `${weather.main.temp} degrees`;
           let message1 = `${weather.weather[0].description}`;
           let message2 = `${weather.main.feels_like} degrees`;
@@ -175,8 +175,6 @@ function retrieveCityWeather(req,res,context,idx,callback) {
           context.current.push({"visib":visib});
           context.current.push({"wind":wind});
 
-        } 
-          
         } else {
           console.log(err);
           console.log(response.statusCode);
