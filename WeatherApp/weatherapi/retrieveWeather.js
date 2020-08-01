@@ -40,18 +40,18 @@ function retrieveZipCodeWeather(req,res,context,idx,callback) {
       idx += 1;
       if(!err && response.statusCode < 400){
         let weather = JSON.parse(body);
-          let message00 = `The forecast for ${weather.name}:`;
-          let message0 = `It is ${weather.main.temp} degrees in ${weather.name}`;
-          let message1 = `The forecast is currently ${weather.weather[0].description}`;
-          let message2 = `It feels like ${weather.main.feels_like} degrees`;
-          let message3 = `The highest temp is ${weather.main.temp_max} degrees`;
-          let message4 = `The lowest temp is ${weather.main.temp_min} degrees`;
-          let message5 = `Atmospheric Pressure ${weather.main.pressure} hPa`;
-          let message6 = `Humidity ${weather.main.humidity}%`;
-          let message7 = `Visibilty ${(weather.visibility)} ft`;
-          let message8 = `Wind Speed: ${(weather.wind.speed)} mph`;
-          let message9 = `Wind Speed: ${(weather.wind.speed)} mph.`;
-          
+        
+          let message00 = `${weather.name}`;
+          let message0 = `${weather.main.temp} degrees`;
+          let message1 = `${weather.weather[0].description}`;
+          let message2 = `${weather.main.feels_like} degrees`;
+          let message3 = `${weather.main.temp_max} degrees`;
+          let message4 = `${weather.main.temp_min} degrees`;
+          let message5 = `${weather.main.pressure} hPa`;
+          let message6 = `${weather.main.humidity}%`;
+          let message7 = `${(weather.visibility)} ft`;
+          let message8 = `${(weather.wind.speed)} mph`;
+
           console.log(message0);
           console.log(message1);
           console.log(message2);
@@ -61,10 +61,28 @@ function retrieveZipCodeWeather(req,res,context,idx,callback) {
           console.log(message6);
           console.log(((weather.visibility)/5280).toPrecision(2) + " miles");
           console.log(message8);
-          console.log(message9);
 
-          curr_weather = message00 + '\n' + message0 + '\n' + message1 + '\n' + message2  + '\n' + message3 + '\n' + message4 + '\n' + message5 + '\n' + message6 + '\n' + message7 + '\n' + message8 + '\n' + message9;
-          context.current.push({"weather":curr_weather});
+          weather_title = message00;
+          currently = message0;
+          description = message1;
+          feelsLike = message2;
+          max = message3;
+          min = message4;
+          pressure = message5;
+          humid = message6;
+          visib = message7;
+          wind = message8;
+          
+          context.current.push({"weatherTitle":weather_title});
+          context.current.push({"currently":currently});
+          context.current.push({"description":description});
+          context.current.push({"feelsLike":feelsLike});
+          context.current.push({"max":max});
+          context.current.push({"min":min});
+          context.current.push({"pressure":pressure});
+          context.current.push({"humid":humid});
+          context.current.push({"visib":visib});
+          context.current.push({"wind":wind});
         
       } else {
         console.log(err);
@@ -113,18 +131,18 @@ function retrieveCityWeather(req,res,context,idx,callback) {
         idx += 1;
         if(!err && response.statusCode < 400){
           let weather = JSON.parse(body);
-          let message00 = `The forecast for ${weather.name}:`;
-          let message0 = `It is ${weather.main.temp} degrees in ${weather.name}`;
-          let message1 = `The forecast is currently ${weather.weather[0].description}`;
-          let message2 = `It feels like ${weather.main.feels_like} degrees`;
-          let message3 = `The highest temp is ${weather.main.temp_max} degrees`;
-          let message4 = `The lowest temp is ${weather.main.temp_min} degrees`;
-          let message5 = `Atmospheric Pressure ${weather.main.pressure} hPa`;
-          let message6 = `Humidity ${weather.main.humidity}%`;
-          let message7 = `Visibilty ${(weather.visibility)} ft`;
-          let message8 = `Wind Speed: ${(weather.wind.speed)} mph`;
-          let message9 = `Wind Speed: ${(weather.wind.speed)} mph.`;
           
+         let message00 = `${weather.name}`;
+          let message0 = `${weather.main.temp} degrees`;
+          let message1 = `${weather.weather[0].description}`;
+          let message2 = `${weather.main.feels_like} degrees`;
+          let message3 = `${weather.main.temp_max} degrees`;
+          let message4 = `${weather.main.temp_min} degrees`;
+          let message5 = `${weather.main.pressure} hPa`;
+          let message6 = `${weather.main.humidity}%`;
+          let message7 = `${(weather.visibility)} ft`;
+          let message8 = `${(weather.wind.speed)} mph`;
+
           console.log(message0);
           console.log(message1);
           console.log(message2);
@@ -134,10 +152,30 @@ function retrieveCityWeather(req,res,context,idx,callback) {
           console.log(message6);
           console.log(((weather.visibility)/5280).toPrecision(2) + " miles");
           console.log(message8);
-          console.log(message9);
 
-          curr_weather = message00 + '\n' + message0 + '\n' + message1 + '\n' + message2  + '\n' + message3 + '\n' + message4 + '\n' + message5 + '\n' + message6 + '\n' + message7 + '\n' + message8 + '\n' + message9;
-          context.current.push({"weather":curr_weather});
+          weather_title = message00;
+          currently = message0;
+          description = message1;
+          feelsLike = message2;
+          max = message3;
+          min = message4;
+          pressure = message5;
+          humid = message6;
+          visib = message7;
+          wind = message8;
+        
+          context.current.push({"weatherTitle":weather_title});
+          context.current.push({"currently":currently});
+          context.current.push({"description":description});
+          context.current.push({"feelsLike":feelsLike});
+          context.current.push({"max":max});
+          context.current.push({"min":min});
+          context.current.push({"pressure":pressure});
+          context.current.push({"humid":humid});
+          context.current.push({"visib":visib});
+          context.current.push({"wind":wind});
+
+        } 
           
         } else {
           console.log(err);
