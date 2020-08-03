@@ -1,16 +1,59 @@
-<p>Settings TBD</p>
-<p>username: {{this.username}}</p>
-<p>email: {{this.email}}</p>
-<p>admin: {{this.admin}}</p>
-<p>max locs: {{this.max_locs}}</p>
+<center>
+  {{> page_header}}
 
-<a href="login.html" 
-   id="register" 
-   style="font-size: 18px; 
-   font-style: italic; 
-   margin-bottom: -15px; 
-   margin-left: 185px;">Logout</a>
+  <p>Settings</p>
+  <p>username: {{this.username}}</p>
+  <p>email: {{this.email}}</p>
+  <p>max locs: {{this.max_locs}}</p>
+  
+  {{#if this.admin}}
+    <form action=""
+          id="login-form"  
+          method="post"
+          onSubmit="return maxLocsValidation();">
+      <div class="container">
+        <input type="hidden"
+               name="username"
+               value="{{this.username}}"/>
+        <label for="user_username">Username:
+        </label>
+        <input type="text" 
+               name="user_username" 
+               id="user_username" 
+               class="login-form-input" 
+               placeholder="Username"/>
+        <label for="max_locs">Maximum Locations (between 1 and 10):
+        </label>
+        <input type="number" 
+               id="max_locs" 
+               name="max_locs" 
+               placeholder="5"
+               class="login-form-input"
+               min="1" 
+               max="10"/>
+        <input type="submit"
+               name="submit"
+               value="updateMaxLocs"/>
+      </div>
+    </form>
+  {{/if}}
 
-{{#if this.err_msg}}
-  <h2>{{this.err_msg}}</h2>
-{{/if}}
+  <a href="login" 
+     id="register" 
+     style="font-size: 18px; 
+            font-style: italic; 
+            margin-bottom: -15px; 
+            margin-left: 185px;">Logout</a>
+
+  <a href="weather?username={{this.username}}"
+     id="register"
+     style="font-size: 18px; 
+            font-style: italic; 
+            margin-top: 20px; 
+            margin-left: 185px;">Return</a>
+
+  {{#if this.err_msg}}
+    <h2>{{this.err_msg}}</h2>
+  {{/if}}
+
+</center>
