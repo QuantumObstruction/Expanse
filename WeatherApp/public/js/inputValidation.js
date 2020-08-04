@@ -18,7 +18,7 @@ function alphaCharCheck(str) {
 }
 
 function usernameValidation() {
-  // Check user input to ensure lastName is not empty 
+  // Check user input to ensure lastName is not empty
   // (it is okay for the firstname to be empty).
   var username = document.getElementById("username").value;
   if (username == '') {
@@ -66,10 +66,12 @@ function usernameAndPasswordValidation() {
   return true;
 }
 
-function passwordValidation() {
+function passwordValidation()
+{
   var password1 = document.getElementById("password").value;
   var password2 = document.getElementById("password2").value;
-  if password1.localeCompare(password2) {
+  if (password1.localeCompare(password2))
+  {
     return true;
   }
   alert("Passwords don't match");
