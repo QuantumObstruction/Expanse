@@ -106,14 +106,45 @@ li {
 	color: grey;
 }
 
-#weekdays {
-	font-size: 25px;
+#table_week {
+	font-size: 24px;
 	margin-left: 50px;
 	margin-top: -11px;
 	font-family: Geneva;
 	color: #1a1a1a;
+  background-color: rgba(122, 130, 136, 0.2);
+  height: 140px;
+  border-collapse: collapse;
 }
 
+tr { 
+  border: none; 
+}
+
+td {
+  border-right: solid 2px grey; 
+  border-left: solid 2px grey;
+}
+
+#table_week tr, td {
+  text-align: center;
+}
+
+#table_week tr:nth-child(2) {
+    font-weight: bold;    
+}
+
+#table_week tr:nth-child(4) {
+    color: red;    
+}
+
+#table_week tr:nth-child(5) {
+    color: blue;    
+}
+
+.paddingBetweenRows td {
+    padding: 0 9px 0 9px;
+}
 
 .footer {
 	position: static;
