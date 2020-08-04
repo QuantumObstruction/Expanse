@@ -1,21 +1,71 @@
 <!--days of the week, starting with today-->
-<p id="weekdays"></p>
+<table id="table_week" class="paddingBetweenRows">
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+        </table>
+
 <script>
-  var day = "";
-  var wDay = new Array(7);
+  var day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];  
+  var icons = ["Icon1", "Icon2", "Icon3", "Icon4", "Icon5", "Icon6", "Icon7"];
+  var highest = ["Highest1", "Highest2", "Highest3", "Highest4", "Highest5", "Highest6", "Highest7"];
+  var lowest = ["Lowest1", "Lowest2", "Lowest3", "Lowest4", "Lowest5", "Lowest6", "Lowest7"];
   
-  wDay[0] = "Sunday";
-  wDay[1] = "Monday";
-  wDay[2] = "Tuesday";
-  wDay[3] = "Wednesday";
-  wDay[4] = "Thursday";
-  wDay[5] = "Friday";
-  wDay[6] = "Saturday";
+  var super_array = [day, icons, highest, lowest],
+  table = document.getElementById("table_week");
 
-  var today = new Date().getDay();
-  for(var i=0; i<wDay.length; i++) {
-    day += "<br/>" + wDay[(i+today)%wDay.length] + '<p style="margin:-5px;"></p>';
+  
+  for(var i=1; i<table.rows.length;i++) {
+    for(var j=0; j<table.rows[i].cells.length; j++)
+      table.rows[i].cells[j].innerHTML = super_array[i-1][j];
   }
-
-  document.getElementById("weekdays").innerHTML = day;
+  
 </script>
