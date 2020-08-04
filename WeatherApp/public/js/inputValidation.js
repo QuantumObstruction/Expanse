@@ -1,93 +1,87 @@
-function invalidCharCheck(str) {
-  var text = /^[@a-zA-Z0-9?* -]+$/;
-  if (! text.test(str)) {
-    alert("Sorry, input value contains a character outside the allowed character set:" +
-          str);
+function emailCharCheck(str)
+{
+  var text = /^[a-zA-Z0-9?* -]+$/;
+  if (text.test(str))
+  {
+    console.log(str + " state 1 char check")
+    alert("invalid email address");
     return false;
   }
-  return true;
-}
-
-function alphaCharCheck(str) {
-  var text = /^[a-zA-Z -]+$/;
-  if (! text.test(str)) {
-    alert("Sorry, name is restricted to alphabetical characters");
-    return false;
-  }
-  return true;
-}
-
-function usernameValidation() {
-  // Check user input to ensure lastName is not empty
-  // (it is okay for the firstname to be empty).
-  var username = document.getElementById("username").value;
-  if (username == '') {
-    alert("Username is required");
-    return false;
-  }
-  if (invalidCharCheck(username) == false) {
-    return false;
-  }
-  return true;
-}
-
-function emailValidation() {
-  var email = document.getElementById("email").value;
-  if (email == '') {
-    // email address is not required
+  else
+  {
+    console.log(str + " is valid email address format")
     return true;
   }
-  if (invalidCharCheck(email) == false) {
-    return false;
-  }
-  return true;
+
 }
 
-function passwordValidation() {
-  var password = document.getElementById("password").value;
-  if (password == '') {
-    alert("Password is required");
-    return false;
-  }
-  if (invalidCharCheck(password) == false) {
-    return false;
-  }
-  return true;
-}
 
-function usernameAndPasswordValidation() {
-  // Check user input for both the username and password.
-  if (usernameValidation() == false) {
-    return false;
-  }
-  if (passwordValidation() == false) {
-    return false;
-  }
-  return true;
-}
-
-function passwordValidation()
+function passwordValidation(phrase1, phrase2)
 {
+
+  if (phrase1===phrase2)
+  {
+    console.log("passwords match")
+    return true;
+  }
+  else
+  {
+    console.log("passwords don't match")
+    alert("passwords don't match");
+    return false
+  }
+}
+
+
+function lengthChecker(phrase1)
+{
+  if (phrase1.length > 50)
+  {
+    console.log("overflow protection, length too long.")
+    alert("Value too long, don't exceed 50 characters!")
+    return false
+  }
+  else if (phrase1.length < 1)
+  {
+    console.log("empty values: " + phrase1)
+    alert("A value was left blank, check again.")
+    return false
+  }
+  else
+  {
+    console.log("length ok for " + phrase1)
+    return true
+  }
+}
+
+
+function usernameAndPassword2Validation()
+{
+  var username = document.getElementById("username").value;
+  var email = document.getElementById("email").value;
   var password1 = document.getElementById("password").value;
   var password2 = document.getElementById("password2").value;
-  if (password1.localeCompare(password2))
-  {
-    return true;
-  }
-  alert("Passwords don't match");
-  return false;
-}
 
-function usernameAndPassword2Validation() {
-  // Check user input for both the username and password.
-  if (usernameValidation() == false) {
-    return false;
+  var valuesArray = [username, email, password1, password2]
+
+
+  for (i=0; i < valuesArray.length; i++)
+  {
+    if ( !lengthChecker(valuesArray[i]) )
+    {
+      return false
+    }
   }
-  if (passwordValidation() == false) {
-    return false;
+
+  if (!emailCharCheck(email))
+  {
+    return false
   }
-  if (emailValidation() == false) {
-    return false;
+
+  if (!passwordValidation(password1, password2))
+  {
+    return false
   }
-  return true;
+
+  return true
 }
