@@ -61,7 +61,6 @@ function usernameAndPassword2Validation()
   var email = document.getElementById("email").value;
   var password1 = document.getElementById("password").value;
   var password2 = document.getElementById("password2").value;
-
   var valuesArray = [username, email, password1, password2]
 
 
