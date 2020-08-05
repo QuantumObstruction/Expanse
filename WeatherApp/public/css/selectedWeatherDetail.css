@@ -1,0 +1,25 @@
+body
+{
+    color: #ffff;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+#topRowDetailedWeather
+{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.card2
+{
+    background-color: #607D8B;
+    padding: 0px 0px 40px 40px
+}
+
+
+
+.line {
+    height: 1px;
+    background-color: #B0BEC5
+}

@@ -1,0 +1,30 @@
+
+
+.card-body
+{
+    padding: 10px;
+
+}
+
+.card-weather .card-body
+{
+    background: #ffffff
+}
+
+#weatherIconSpace
+{
+  margin-right: 20px;
+}
+
+.weatherCardCont
+{
+    border-radius: 2px;
+}
+
+.card-weather .weakly-weather .weakly-weather-item
+{
+    flex: 0 0 14.28%;
+    border-right: 1px solid #f2f2f2;
+    padding: 5px;
+    text-align: center
+}
