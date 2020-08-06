@@ -55,6 +55,7 @@ function loc_callback(req,res,context){
 //-----------------------------------------------------------
 function weather_callback(req,res,context){
   console.log('weather_callback:');
+  console.log(context);
   res.render('weather', context);
   return;
 }
