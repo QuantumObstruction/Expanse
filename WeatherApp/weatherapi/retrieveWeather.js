@@ -30,9 +30,9 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
             context.locs[idx].place +
             '&units='+ context.units +'&APPID=' + 
             credentials.owmKey, 
-            handleGet);
+            handleWeatherGet);
     
-    function handleGet(err, response, body){
+    function handleWeatherGet(err, response, body){
       idx += 1;
       if(!err && response.statusCode < 400){
         let weather = JSON.parse(body);
@@ -98,7 +98,7 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
 // Attempt to retrieve the forecast weather.
 //================================================================= 
 function retrieveForecastWeather(req,res,context,idx,callback) {
-  console.log('retrieveForecastWeather:');
+  console.log('retrieveForecastWeather: idx=' + idx);
   
   if (idx < context.locs.length) {
     if (isNaN(context.locs[idx].place)){
@@ -113,85 +113,167 @@ function retrieveForecastWeather(req,res,context,idx,callback) {
             context.locs[idx].place +
             '&units='+ context.units +'&APPID=' + 
             credentials.owmKey, 
-            handleGet);
+            handleForecastGet);
     
-    function handleGet(err, response, body){
+    function handleForecastGet(err, response, body){
       idx += 1;
+      console.log('handleForecastGet: idx=' + idx);
       if(!err && response.statusCode < 400){
         let forecast = JSON.parse(body);
-        console.log(forecast);
+        // console.log(forecast);
 
-        // Need to parse forecast here to get five-day
-        // weather forecast. Forecast data is in a
-        // list of 40 entries for each 3-hour interval
-        // in the next five days (8 intervals per day *
-        // five days). (Technically, you should look at
-        // the cnt entry to ensure there are actually
-        // 40 entries in the list.)
-        //
-        // The idea is that we would create five 'forecast'
-        // objects in an array that would be appended to
-        // context.locs[idx-1] so that the handlebars
-        // file could operate on them.
-        //
-        // The code below is horrible, but it is a start
-        // and gets minimal forecast info to the 
-        // weather_future.handlebars file.
         let cnt = forecast.cnt;
         console.log('cnt=' + cnt);
         
+        var x;
+        var y = 0;   // this is essentially a date index
+        var new_day = true;
         var temp_min;
         var temp_max;
+        var temp_date;
+        var temp_main;
+        var temp_description;
         
-        temp_min = forecast.list[0].main.temp_min;
-        console.log('temp_min=' + temp_min);
-        temp_max = forecast.list[0].main.temp_max;
-        console.log('temp_max=' + temp_max);
-        temps = {"hi":temp_max,"lo":temp_min};
-        context.locs[idx-1].forecast.push(temps);
-        
-        temp_min = forecast.list[8].main.temp_min;
-        console.log('temp_min=' + temp_min);
-        temp_max = forecast.list[8].main.temp_max;
-        console.log('temp_max=' + temp_max);
-        temps = {"hi":temp_max,"lo":temp_min};
-        context.locs[idx-1].forecast.push(temps);
-        
-        temp_min = forecast.list[16].main.temp_min;
-        console.log('temp_min=' + temp_min);
-        temp_max = forecast.list[16].main.temp_max;
-        console.log('temp_max=' + temp_max);
-        temps = {"hi":temp_max,"lo":temp_min};
-        context.locs[idx-1].forecast.push(temps);
-        
-        temp_min = forecast.list[24].main.temp_min;
-        console.log('temp_min=' + temp_min);
-        temp_max = forecast.list[24].main.temp_max;
-        console.log('temp_max=' + temp_max);
-        temps = {"hi":temp_max,"lo":temp_min};
-        context.locs[idx-1].forecast.push(temps);
-        
-        temp_min = forecast.list[32].main.temp_min;
-        console.log('temp_min=' + temp_min);
-        temp_max = forecast.list[32].main.temp_max;
-        console.log('temp_max=' + temp_max);
-        temps = {"hi":temp_max,"lo":temp_min};
-        context.locs[idx-1].forecast.push(temps);
-        
-        console.log(context.locs[idx-1].forecast);
+        // We typically expect to get 40 lists (8 3-hour intervals per
+        // day x five-day forecast). But the 3-hour interval forecasts
+        // typically won't start neatly on whole-day boundaries so 
+        // we'll usually end up with six days.
+        for (x = 0; x < cnt; x++)
+        {
+          if (!new_day)
+          {
+            temp_date = forecast.list[x].dt_txt.split(" ");
+            if (temp_date[0] != context.locs[idx-1].forecast[y].date)
+            {
+              new_day = true;
+              y += 1;
+            }
+          }
+
+          temp_min = forecast.list[x].main.temp_min;
+          temp_max = forecast.list[x].main.temp_max;
+          temp_date = forecast.list[x].dt_txt.split(" ");
+          temp_main = forecast.list[x].weather[0].main;
+          temp_description = forecast.list[x].weather[0].description;
+          
+          if (new_day)
+          {
+            temps = {"hi":temp_max,
+                     "lo":temp_min,
+                     "date":temp_date[0],
+                     "main":temp_main,
+                     "desc":temp_description};
+            context.locs[idx-1].forecast.push(temps);
+            new_day = false;
+          }
+          else
+          {
+            // Determine if this 3-hour interval has a 'higher' hi
+            // or 'lower' lo than we've previously detected for
+            // this date.
+            if (temp_min < context.locs[idx-1].forecast[y].lo)
+            {
+              context.locs[idx-1].forecast[y].lo = temp_min;
+            }
+            
+            if (temp_max > context.locs[idx-1].forecast[y].hi)
+            {
+              context.locs[idx-1].forecast[y].hi = temp_max;
+            }
+            
+            // -------------------------------------------------------
+            // The weather will often change during the day, so
+            // the description for one 3-hour interval could below
+            // different than the description for another 3-hour
+            // interval during the same day. For our purposes, 
+            // we'll assume the user is most interested in the 
+            // 'worst' weather on a given day. Here's the order
+            // of weather conditions I'm implementing (see
+            // https://openweathermap.org/weather-conditions):
+            //   thunderstorm
+            //   snow
+            //   rain
+            //   shower rain
+            //   mist
+            //   broken clouds
+            //   scattered clouds
+            //   few clouds
+            //   clear sky
+            if (temp_description == 'thunderstorm')
+            {
+                context.locs[idx-1].forecast[y].main = temp_main;
+                context.locs[idx-1].forecast[y].desc = temp_description;
+            }
+            else if (temp_description == 'snow')
+            {
+              if (context.locs[idx-1].forecast[y].desc != 'thunderstorm')
+              {
+                context.locs[idx-1].forecast[y].main = temp_main;
+                context.locs[idx-1].forecast[y].desc = temp_description;
+              }
+            }
+            else if (temp_description == 'rain')
+            {
+              if ((context.locs[idx-1].forecast[y].desc != 'thunderstorm') &&
+                  (context.locs[idx-1].forecast[y].desc != 'snow'))
+              {
+                context.locs[idx-1].forecast[y].main = temp_main;
+                context.locs[idx-1].forecast[y].desc = temp_description;
+              }
+            }
+            else if (temp_description == 'shower rain')
+            {
+              if ((context.locs[idx-1].forecast[y].desc != 'thunderstorm') &&
+                  (context.locs[idx-1].forecast[y].desc != 'rain') &&
+                  (context.locs[idx-1].forecast[y].desc != 'snow'))
+              {
+                context.locs[idx-1].forecast[y].main = temp_main;
+                context.locs[idx-1].forecast[y].desc = temp_description;
+              }
+            }
+            else if (temp_description == 'mist')
+            {
+              if ((context.locs[idx-1].forecast[y].desc != 'thunderstorm') &&
+                  (context.locs[idx-1].forecast[y].desc != 'rain') &&
+                  (context.locs[idx-1].forecast[y].desc != 'shower rain') &&
+                  (context.locs[idx-1].forecast[y].desc != 'snow'))
+              {
+                context.locs[idx-1].forecast[y].main = temp_main;
+                context.locs[idx-1].forecast[y].desc = temp_description;
+              }
+            }
+            else if (temp_description == 'broken clouds')
+            {
+              if ((context.locs[idx-1].forecast[y].desc == 'clear sky') ||
+                  (context.locs[idx-1].forecast[y].desc == 'few clouds'))
+              {
+                context.locs[idx-1].forecast[y].main = temp_main;
+                context.locs[idx-1].forecast[y].desc = temp_description;
+              }
+            }
+            else if (temp_description == 'few clouds')
+            {
+              context.locs[idx-1].forecast[y].main = temp_main;
+              context.locs[idx-1].forecast[y].desc = temp_description;
+            }
+            
+            // -------------------------------------------------------
+            
+          }
+        }
       } else {
         console.log(err);
         console.log(response.statusCode);
       }
-      // If there are more zipcodes, then get the weather
-      // for the next zipcode. Otherwise, attempt to get
-      // weather for city locations.
+      
+      // If there are more locations, then get the forecast
+      // for the next location.
       if (idx < context.locs.length) {
-        context.locs[0].forecast = [];
+        context.locs[idx].forecast = [];
         retrieveForecastWeather(req,res,context,idx,callback);
       }
       else {
-          callback(req,res,context);
+        callback(req,res,context);
       }
       return;
     }
