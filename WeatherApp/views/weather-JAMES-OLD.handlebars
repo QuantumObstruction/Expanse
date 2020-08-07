@@ -1,0 +1,87 @@
+<main>
+  <!--		<img src="avatar.jpg" alt="Avatar" id="avatar"> -->
+  <div class="dropdown">
+    <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
+    <div id="myDropdown" class="dropdown-content">
+      <a href="settings.html?username={{this.username}}">Settings</a>
+      <a href="#">Help</a>
+      <a href="login.html">Logout</a>
+    </div>
+  </div>
+
+  <!--for dropdown menu-->
+  <script>
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+    /* Close the dropdown if the user clicks outside*/
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+
+  <div style="float: right; text-align: center;">
+    {{> page_header}}
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+  {{> location_select}}
+
+  <!--a panel for forecast for saving user's favorite cities-->
+  <div id="panel" class="panel panel-default">
+    <div class="panel-body">
+      <ul>
+        {{#each locs}}
+        <li>{{this.place}}</li>
+        {{/each}}
+      </ul>
+      <!-- <a class="previous round">&#8249;</a>
+           <a class="next round">&#8250;</a>
+      -->
+    </div>
+  </div>
+
+  {{> weather_future}}
+
+</main>
+
+{{> weather_today}}
+
+<!--subscription form-->
+<div class="dropdown2">
+  <button onclick="location.href='subscription.html';" id="subscr_btn" style="width: 15%; height: 40px; font-size: 15px;">Subscribe!</button>
+</div>
+
+<!--for dropdown menu-->
+<!--      <h1>Subscribe</h1>
+  <p>Where do you want to get the weekly weather forecast?</p>
+  <hr>
+  <label for="email"><b>Email</b></label>
+  <input type="text" placeholder="Enter you email" name="email" required>
+-->	 
+
+{{#if this.err_msg}}
+  <h2>{{this.err_msg}}</h2>
+{{/if}}
+
+<!--a footer-->
+<div class="footer">
+  <p id="footer" style="padding-top: 22px;">Made by Expanse Team</p>
+  <p id="footer">Oregon State University</p>
+  <p id="footer">Summer 2020</p>
+</div>
