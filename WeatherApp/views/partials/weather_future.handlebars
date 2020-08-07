@@ -69,3 +69,11 @@
   }
   
 </script>
+
+
+{{#each locs}}
+  <p> {{this.place}}: </p>
+  {{#each forecast}}
+  <p> {{date}}, {{hi}}, {{lo}}, {{main}}, {{desc}}</p>
+  {{/each}}
+{{/each}}

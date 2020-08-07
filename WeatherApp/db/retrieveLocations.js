@@ -7,6 +7,7 @@ var myweather = require('../weatherapi/retrieveWeather.js')
 //================================================================= 
 function retrieveLocations(req,res,context,callback) {
   console.log('retrieveLocations:');
+  context.locs = []
   retrieveZipCodes(req,res,context,callback);
 }
 
@@ -15,20 +16,6 @@ function retrieveLocations(req,res,context,callback) {
 //================================================================= 
 function retrieveZipCodes(req,res,context,callback) {
   console.log('retrieveZipCodes:');
-  if (!("zipcodes" in context)) {
-    zipcodes = [];
-    context.zipcodes = zipcodes;
-  }
-  
-  if (myapp.dbEmulation == true){
-    console.log('emulated successful zip code retrieval');
-    // Plug in some representative zipcodes like
-    // we might get with a live database.
-    context.zipcodes.push({"zipcode":"71655"});
-    context.zipcodes.push({"zipcode":"75028"});
-    retrieveCities(req,res,context,callback);
-    return;
-  }
   
   var query = 
     "SELECT Users.user_id, zipcode FROM Users" +
@@ -58,8 +45,7 @@ function retrieveZipCodes(req,res,context,callback) {
       {
         for (var x in rows)
         {
-          context.zipcodes.push({"zipcode":rows[x].zipcode
-                    });
+          context.locs.push({"place":rows[x].zipcode});
         }
         retrieveCities(req, res, context, callback);
         return;
@@ -67,7 +53,6 @@ function retrieveZipCodes(req,res,context,callback) {
       else
       {
         console.log('no match for zip codes');
-        context.zipcodes = zipcodes;    
         retrieveCities(req, res, context, callback);
         return;
       }
@@ -81,32 +66,6 @@ function retrieveZipCodes(req,res,context,callback) {
 //================================================================= 
 function retrieveCities(req,res,context,callback) {
   console.log('retrieveCities:');
-  if (!("cities" in context)) {
-    cities = [];
-    context.cities = cities;
-  }
-  
-  if (myapp.dbEmulation == true){
-    console.log('emulated successful city retrieval');
-    // Plug in some representative city data like
-    // we might get with a live database.
-    cities.push({"city":"Corvallis",
-                 "state":"OR",
-                 "country":"US"
-                 });
-    cities.push({"city":"Portland",
-                 "state":"OR",
-                 "country":"US"
-                 });
-    cities.push({"city":"Portland",
-                 "state":"ME",
-                 "country":"US"
-                 });
-    context.cities = cities;
-    myweather.retrieveWeather(req, res, context);
-    callback(req, res, context);
-    return;
-  }
   
   var query = 
     "SELECT Users.user_id, city, state, country FROM Users" +
@@ -136,23 +95,17 @@ function retrieveCities(req,res,context,callback) {
       {
         for (var x in rows)
         {
-          cities.push({"city":rows[x].city,
-                       "state":rows[x].state,
-                       "country":rows[x].country
-                       });
+          loc = rows[x].city + "," +
+                rows[x].state + "," +
+                rows[x].country;
+          context.locs.push({"place":loc});
         }
-        context.cities = cities;
         context.user_id = rows[0].user_id;
-        console.log('context:');
-        console.log(context);
         callback(req, res, context);
       }
       else
       {
         console.log('no match for cities');
-        context.cities = cities;
-        console.log('context:');
-        console.log(context);
         callback(req, res, context);
       }
     }
