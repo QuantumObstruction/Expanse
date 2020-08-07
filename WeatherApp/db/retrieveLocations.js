@@ -45,7 +45,16 @@ function retrieveZipCodes(req,res,context,callback) {
       {
         for (var x in rows)
         {
-          context.locs.push({"place":rows[x].zipcode});
+          if (context.locs.length >= context.max_locs)
+          {
+            context.err_msg = "max_locs exceeded - locs truncated";
+            callback(req, res, context);
+            return;
+          }
+          else
+          {
+            context.locs.push({"place":rows[x].zipcode});
+          }
         }
         retrieveCities(req, res, context, callback);
         return;
@@ -95,10 +104,19 @@ function retrieveCities(req,res,context,callback) {
       {
         for (var x in rows)
         {
-          loc = rows[x].city + "," +
-                rows[x].state + "," +
-                rows[x].country;
-          context.locs.push({"place":loc});
+          if (context.locs.length >= context.max_locs)
+          {
+            context.err_msg = "max_locs exceeded - locs truncated";
+            callback(req, res, context);
+            return;
+          }
+          else
+          {
+            loc = rows[x].city + "," +
+                  rows[x].state + "," +
+                  rows[x].country;
+            context.locs.push({"place":loc});
+          }
         }
         context.user_id = rows[0].user_id;
         callback(req, res, context);
