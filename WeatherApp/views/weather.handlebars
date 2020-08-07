@@ -1,87 +1,59 @@
-<main>
-  <!--		<img src="avatar.jpg" alt="Avatar" id="avatar"> -->
-  <div class="dropdown">
-    <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
-    <div id="myDropdown" class="dropdown-content">
-      <a href="settings.html?username={{this.username}}">Settings</a>
-      <a href="#">Help</a>
-      <a href="login.html">Logout</a>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="mainPage.css">
+    <script src="mainPageFrontEndScript.js"></script> 
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="jumbotron">
+        <h1>WeatherPal</h1>
+        <p>some description</p>
+      </div>
     </div>
-  </div>
 
-  <!--for dropdown menu-->
-  <script>
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-    /* Close the dropdown if the user clicks outside*/
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  </script>
+    <div class="row">
+      <div class="col-8 mr-2" id="mainArea">
+        <div class="container" id="cityForecastArea">
 
-  <div style="float: right; text-align: center;">
-    {{> page_header}}
-  </div>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
+          {{#each this.locs}}
+            <div class="row">{{> cityForecastView}}</div>
+          {{/each}}
 
-  {{> location_select}}
+        </div>
+      </div>
 
-  <!--a panel for forecast for saving user's favorite cities-->
-  <div id="panel" class="panel panel-default">
-    <div class="panel-body">
-      <ul>
-        {{#each locs}}
-        <li>{{this.place}}</li>
-        {{/each}}
-      </ul>
-      <!-- <a class="previous round">&#8249;</a>
-           <a class="next round">&#8250;</a>
-      -->
+      <div class="col-3 mr-2" id="sidebarArea">
+        <div class="container" id="currentDetailsArea">
+          <div class="sticky-top">
+
+              {{> sidebarView}}
+
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
 
-  {{> weather_future}}
 
-</main>
 
-{{> weather_today}}
+    <footer>
+      <div class="footerContainer">
+        <p id="footer">Made by Expanse Team</p>
+        <p id="footer">Oregon State University</p>
+        <p id="footer">Summer 2020</p>
+      </div>
+    <footer>
 
-<!--subscription form-->
-<div class="dropdown2">
-  <button onclick="location.href='subscription.html';" id="subscr_btn" style="width: 15%; height: 40px; font-size: 15px;">Subscribe!</button>
-</div>
+  </body>
 
-<!--for dropdown menu-->
-<!--      <h1>Subscribe</h1>
-  <p>Where do you want to get the weekly weather forecast?</p>
-  <hr>
-  <label for="email"><b>Email</b></label>
-  <input type="text" placeholder="Enter you email" name="email" required>
--->	 
-
-{{#if this.err_msg}}
-  <h2>{{this.err_msg}}</h2>
-{{/if}}
-
-<!--a footer-->
-<div class="footer">
-  <p id="footer" style="padding-top: 22px;">Made by Expanse Team</p>
-  <p id="footer">Oregon State University</p>
-  <p id="footer">Summer 2020</p>
-</div>
+</htmL>
