@@ -1,20 +1,10 @@
 var mysql = require('../dbcon.js');
-var myapp = require('../weatherApp.js');
 
 //=================================================================
 // Attempt to retrieve the user's information.
 //================================================================= 
 function retrieveUserInfo(req,res,context,callback) {
   console.log('retrieveUserInfo:');
-  
-  if (myapp.dbEmulation == true){
-    console.log('emulated successful user info retrieval');
-    context.email = 'nobody@yahoo.com';
-    context.max_locs = 5;
-    context.admin_flag = 0;
-    callback(req, res, context);
-    return;
-  }
   
   var query = 
     "SELECT email_addr, max_locs, admin_flag FROM Users" +

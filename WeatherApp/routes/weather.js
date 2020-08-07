@@ -1,6 +1,8 @@
 var db_loc = require('../db/retrieveLocations.js');
 var weather_api = require('../weatherapi/retrieveWeather.js');
 var db_save = require('../db/saveLocations.js');
+var db_user = require('../db/retrieveUserInfo.js');
+var db_sub = require('../db/deleteLocation.js');
 
 //=================================================================
 // weather (handles gets/posts from weather page)
@@ -37,7 +39,14 @@ function handle_get(req, res){
   console.log('context.username=' + context.username);
   console.log('context.units=' + context.units);
 
-  // Retrieve the user's saved locations
+  // Retrieve the user's info and saved locations
+  db_user.retrieveUserInfo(req,res,context,max_loc_callback);
+  return;
+}
+
+//----------------------------------------------------
+function max_loc_callback(req,res,context){
+  console.log('max_loc_callback');
   db_loc.retrieveLocations(req,res,context,loc_callback);
   return;
 }
@@ -77,7 +86,12 @@ router.post('/', function(req, res) {
       return;
     }
 
-   if(req.body['units']) {
+    if(req.body['subtract']) {
+     handle_subtract(req,res);
+     return;
+    }
+    
+    if(req.body['units']) {
      handle_units(req,res);
      return;
     }
@@ -88,6 +102,25 @@ router.post('/', function(req, res) {
 });
 
 //----------------------------------------------------
+function handle_subtract(req,res){
+  console.log('handle_subtract:');
+  var context = {};
+  context.title = "weather";
+  context.username = req.query.username;
+  context.units = "imperial";
+  console.log('context.username=' + context.username);
+  console.log('context.units=' + context.units);
+
+  // Retrieve the user's info and saved locations
+  db_sub.deleteLocation(req,res,context,del_callback);
+}
+
+function del_callback(req,res,context){
+  console.log('del_callback:');
+  db_user.retrieveUserInfo(req,res,context,max_loc_callback);
+}
+
+//----------------------------------------------------
 function handle_units(req,res){
   console.log('handle_units');
   context = {};
@@ -95,7 +128,7 @@ function handle_units(req,res){
   context.username = req.query.username;
   context.units= req.body.units;
 
- db_loc.retrieveLocations(req,res,context,loc_callback);
+  db_user.retrieveUserInfo(req,res,context,max_loc_callback);
   return;
 }
 
@@ -135,14 +168,37 @@ function handle_add(req,res){
   context.title = "weather";
   context.units = "imperial";
   context.username = req.body.username;
-  place = req.body.place.split(",");
-  context.place = place;
-  // Did user provide zipcode or city?
-  if (isNaN(place[0])){
-    db_save.saveCity(req,res,context,add_callback);
+  context.place = req.body.place.split(",");
+  // Has user used up max_locs?
+  db_user.retrieveUserInfo(req,res,context,user_callback);
+  return;
+}
+
+//----------------------------------------------------
+function user_callback(req,res,context){
+  console.log('user_callback');
+  db_loc.retrieveLocations(req,res,context,check_callback);
+  return;
+}
+
+//----------------------------------------------------
+function check_callback(req,res,context){
+  console.log('check_callback');
+  if (context.locs.length < context.max_locs)
+  {
+    // Did user provide zipcode or city?
+    place = req.body.place.split(",");
+    if (isNaN(place[0])){
+      db_save.saveCity(req,res,context,add_callback);
+    }
+    else {
+      db_save.saveZipCode(req,res,context,add_callback);
+    }
   }
-  else {
-    db_save.saveZipCode(req,res,context,add_callback);
+  else
+  {
+    context.err_msg = "max_locs already used";
+    add_callback(req,res,context);
   }
   return;
 }
