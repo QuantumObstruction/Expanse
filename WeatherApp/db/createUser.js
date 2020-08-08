@@ -1,5 +1,4 @@
 var mysql = require('../dbcon.js');
-var myapp = require('../weatherApp.js');
 var db_loc = require('./retrieveLocations.js');
 
 //=================================================================
@@ -11,13 +10,6 @@ function createUser(req,res) {
   context.username = req.body.username;
   context.password = req.body.password;
   context.email = req.body.email;
-
-  if (myapp.dbEmulation == true){
-    console.log('emulated successful user creation');
-    res.redirect('/weather?username=' +
-                 context.username);
-    return;
-  }
   
   var queryStr = 
     "INSERT INTO Users" +
