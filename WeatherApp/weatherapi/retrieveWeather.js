@@ -38,27 +38,17 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
       if(!err && response.statusCode < 400){
         let weather = JSON.parse(body);
 
-        let message00 = `${weather.name}`;
-        let message0 = `${weather.main.temp} degrees`;
-        let message1 = `${weather.weather[0].description}`;
-        let message2 = `${weather.main.feels_like} degrees`;
-        let message3 = `${weather.main.temp_max} degrees`;
-        let message4 = `${weather.main.temp_min} degrees`;
-        let message5 = `${weather.main.pressure} hPa`;
-        let message6 = `${weather.main.humidity}%`;
-        let message7 = `${(weather.visibility)} ft`;
-        let message8 = `${(weather.wind.speed)} mph`;
-
-        weather_title = message00;
-        currently = message0;
-        description = message1;
-        feelsLike = message2;
-        max = message3;
-        min = message4;
-        pressure = message5;
-        humid = message6;
-        visib = message7;
-        wind = message8;
+        let weather_title = `${weather.name}`;
+        let currently = `${weather.main.temp} degrees`;
+        let description = `${weather.weather[0].description}`;
+        let feelsLike = `${weather.main.feels_like} degrees`;
+        let max = `${weather.main.temp_max} degrees`;
+        let min = `${weather.main.temp_min} degrees`;
+        let pressure = `${weather.main.pressure} hPa`;
+        let humid = `${weather.main.humidity}%`;
+        let visib = `${(weather.visibility)} ft`;
+        let wind = `${(weather.wind.speed)} mph`;
+	      
         weatherIcon = weatherIconParser(description)
         currentlySelected= false;
 
@@ -279,12 +269,14 @@ function retrieveForecastWeather(req,res,context,idx,callback) {
 // 'worst' weather on a given day. Here's the order
 // of weather conditions I'm implementing (see
 // https://openweathermap.org/weather-conditions):
-// Storm
+
+//	Priority Order
+// Thunderstorm
 // Snow
 // Rain
 // Cloudy
-// Partly cloudy
-// Sun
+// Partly Cloudy
+// Sunny
 
 function weatherIconParser(weatherString)
 {
@@ -295,7 +287,7 @@ function weatherIconParser(weatherString)
 	const cloud =  'cloud';
 	const sun = 'clear';
 
-  weatherString = weatherString.toLowerCase()
+  	weatherString = weatherString.toLowerCase()
 
 	if(weatherString.includes(bolt))
 	{
