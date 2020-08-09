@@ -2,8 +2,6 @@
 // weatherApp (main app)
 //================================================================= 
 
-var dbEmulation = false;
-
 var express = require('express');
 var mysql = require('./dbcon.js');
 
@@ -56,9 +54,3 @@ app.listen(app.get('port'), function(){
               app.get('port') + 
               '; press Ctrl-C to terminate.');
 });
-
-//=================================================================
-// Exports
-//================================================================= 
-
-module.exports.dbEmulation = dbEmulation;
