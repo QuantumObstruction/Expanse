@@ -9,10 +9,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="/css/style.css">
   </head>
 
   <body>
-
+  
+  <div id="aside-text">  
+  <h3>Today's Forecast</h3>
+  
 {{#each this.locs}}
 
     <div class="row justify-content-center">
@@ -20,7 +24,7 @@
             <div class="card2">
               <div class="container">
                 <div class="row" id="topRowDetailedWeather">
-                  <h4 id="selectedCityCond">{{this.current.weatherTitle}}</h4>
+                  <h4 id="selectedCityCond" style="text-decoration: underline; font-size: 28px; margin-top: 13px;">{{this.current.weatherTitle}}</h4>
                 </div>
                 <div class="row">
 
@@ -31,41 +35,32 @@
                     <div class="line my-2"></div>
 
                     <div class="row">
-                        <p class="light-text">Current Temp</p>
+                        <p class="light-text">Current Temp:</p>
                         <p class="ml-auto"  id="currentTempVal">{{this.current.currently}}</p>
                     </div>
                     <div class="row">
-                        <p class="light-text">Wind</p>
+                        <p class="light-text">Wind:</p>
                         <p class="ml-auto" id="windVal">{{this.current.wind}}</p>
                     </div>
                     <div class="row">
-                        <p class="light-text">Humidity</p>
+                        <p class="light-text">Humidity:</p>
                         <p class="ml-auto" id="humidVal">{{this.current.humid}}</p>
                     </div>
                     <div class="row">
-                        <p class="light-text">Visibility</p>
+                        <p class="light-text">Visibility:</p>
                         <p class="ml-auto" id="visVal">{{this.current.visib}}</p>
                     </div>
-
-                    <div class="line my-2"></div>
-
                     <div class="row">
-                      <div class="col center-block text-center">
-                        <p class="light-text" id="weatherDescTitle">Description:</p>
-                      </div>
+                        <p class="light-text">&nbsp&nbspDescription:&nbsp &nbsp</p>
+                        <p class="ml-auto" id="weatherDescriptionText">{{this.current.description}}</p>
                     </div>
-
-                    <div class="row">
-                      <div class="col center-block text-center">
-                        <p class="light-text" id="weatherDescriptionText">{{this.current.description}}</p>
-                      </div>
-                    </div>
-
+                   
             </div>
         </div>
     </div>
 
 {{/each}}
 
+  </div>
   </body>
 </html>
