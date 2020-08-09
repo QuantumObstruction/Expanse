@@ -59,9 +59,16 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
         visib = message7;
         wind = message8;
         weatherIcon = weatherIconParser(description)
+        currentlySelected= false;
 
         //tidy up the format for nice display
-        currently = currently.slice(0, 2)
+        currently = Math.round(currently.slice(0, 2))
+
+        //check to see if the selected city number is the same one we're lookng at
+        if (context.selectCityNumber==idx)
+        {
+          currentlySelected=true;
+        }
 
         current = {"weatherTitle":weather_title,
                    "currently":currently,
@@ -73,6 +80,7 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
                    "humid":humid,
                    "visib":visib,
                    "wind":wind,
+                   "isCurrentlySelected":currentlySelected,
                    "weatherIcon":weatherIcon};
         context.locs[idx-1].current = current;
 

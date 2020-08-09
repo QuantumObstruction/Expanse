@@ -1,87 +1,179 @@
-<main>
-  <!--		<img src="avatar.jpg" alt="Avatar" id="avatar"> -->
-  <div class="dropdown">
-    <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
-    <div id="myDropdown" class="dropdown-content">
-      <a href="settings.html?username={{this.username}}">Settings</a>
-      <a href="#">Help</a>
-      <a href="login.html">Logout</a>
-    </div>
-  </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!--for dropdown menu-->
-  <script>
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-    /* Close the dropdown if the user clicks outside*/
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/mainPage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+  </head>
+
+  <body>
+
+    <p hidden id="hiddenUsername">{{this.username}}</p>
+
+    <div class="row">
+
+      <div class="col-8">
+
+          <div class="jumbotron" id="topTitle">
+            <h1>WeatherPal</h1>
+            <p>some description</p>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="dropdown">
+          <img src="/css/avatar.jpg" onclick="myFunction()" class="dropbtn" id="avatar">
+          <div id="myDropdown" class="dropdown-content">
+            <a href="settings.html?username={{this.username}}">Settings</a>
+            <a href="#">Help</a>
+            <a href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-8">
+        <div id="searchBarContainer" class="align-middle">
+          {{> location_select}}
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row" id="mainAreaRow">
+
+      <div class="col-7 mr-1" id="mainArea">
+
+          {{#each this.locs}}
+            <div class="row forecastRow">{{> cityForecastView}}</div>
+          {{/each}}
+
+      </div>
+
+      <div class="col-4 mr-1" id="sidebarArea">
+        <div class="container" id="currentDetailsArea">
+              {{> sidebarView}}
+        </div>
+      </div>
+
+    </div>
+
+
+
+      <div class="footer" id="footerContainer">
+        <div class="row">
+          <div class="col-12">
+            <p id="footer">Made by Expanse Team</p>
+            <p id="footer">Oregon State University</p>
+            <p id="footer">Summer 2020</p>
+          </div>
+        </div>
+      </div>
+
+
+  </body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+</script>
+
+
+
+
+
+
+<script>
+  function myFunction()
+  {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+  /* Close the dropdown if the user clicks outside*/
+  window.onclick = function(event)
+  {
+    if (!event.target.matches('.dropbtn'))
+    {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++)
+      {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show'))
+        {
+          openDropdown.classList.remove('show');
         }
       }
     }
-  </script>
+  }
+</script>
 
-  <div style="float: right; text-align: center;">
-    {{> page_header}}
-  </div>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
 
-  {{> location_select}}
+<script>
+document.addEventListener("DOMContentLoaded", function()
+{
+  var mainArea = document.getElementById('mainArea');
+  var username = document.getElementById('hiddenUsername').textContent
 
-  <!--a panel for forecast for saving user's favorite cities-->
-  <div id="panel" class="panel panel-default">
-    <div class="panel-body">
-      <ul>
-        {{#each locs}}
-        <li>{{this.place}}</li>
-        {{/each}}
-      </ul>
-      <!-- <a class="previous round">&#8249;</a>
-           <a class="next round">&#8250;</a>
-      -->
-    </div>
-  </div>
+  //var weatherPageLocations = document.getElementsByClassName("d-flex flexRow forecast-row")
+  // weatherPageLocations.attachEvent('onclick', alert("666"), false);
 
-  {{> weather_future}}
+  $( document ).ready(function() {
+      console.log( "ready!" );
 
-</main>
+      $( ".forecastRow" ).on( "click", function()
+      {
+        var currentID = this.childNodes[15].id.substring(4);
+        console.log("selected city: " + this.childNodes[15].id.substring(4));
+        console.log("username: " + username)
 
-{{> weather_today}}
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/weather", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('selected=' + currentID + '&username=' + username + "&select=select");
 
-<!--subscription form-->
-<div class="dropdown2">
-  <button onclick="location.href='subscription.html';" id="subscr_btn" style="width: 15%; height: 40px; font-size: 15px;">Subscribe!</button>
-</div>
+      });
+  });
 
-<!--for dropdown menu-->
-<!--      <h1>Subscribe</h1>
-  <p>Where do you want to get the weekly weather forecast?</p>
-  <hr>
-  <label for="email"><b>Email</b></label>
-  <input type="text" placeholder="Enter you email" name="email" required>
--->	 
+});
+</script>
 
-{{#if this.err_msg}}
-  <h2>{{this.err_msg}}</h2>
-{{/if}}
 
-<!--a footer-->
-<div class="footer">
-  <p id="footer" style="padding-top: 22px;">Made by Expanse Team</p>
-  <p id="footer">Oregon State University</p>
-  <p id="footer">Summer 2020</p>
-</div>
+<!-- <script>
+
+  var unitsChoiceGroup = document.unitsRadio.units
+  var prev = null;
+     for(var i = 0; i < unitsChoiceGroup.length; i++)
+     {
+         unitsChoiceGroup[i].onclick = function ()
+         {
+             console.log(this.value)
+         };
+     }
+
+</script> -->

@@ -90,7 +90,7 @@ router.post('/', function(req, res) {
      handle_subtract(req,res);
      return;
     }
-    
+
     if(req.body['units']) {
      handle_units(req,res);
      return;
