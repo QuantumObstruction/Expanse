@@ -279,19 +279,16 @@ function retrieveForecastWeather(req,res,context,idx,callback) {
 // 'worst' weather on a given day. Here's the order
 // of weather conditions I'm implementing (see
 // https://openweathermap.org/weather-conditions):
-//   thunderstorm
-//   snow
-//   rain
-//   shower rain
-//   mist
-//   broken clouds
-//   scattered clouds
-//   few clouds
-//   clear sky
+// Storm
+// Snow
+// Rain
+// Cloudy
+// Partly cloudy
+// Sun
 
 function weatherIconParser(weatherString)
 {
-  const cloudrain = 'rain';
+  	const cloudrain = 'rain';
 	const bolt = 'storm';
 	const snowflake = 'snow';
 	const cloudsun = 'partly';
@@ -300,29 +297,29 @@ function weatherIconParser(weatherString)
 
   weatherString = weatherString.toLowerCase()
 
-	if(weatherString.includes(sun))
+	if(weatherString.includes(bolt))
 	{
-		return 'sun';
+		return 'bolt';
 	}
 	else if(weatherString.includes(snowflake))
 	{
 		return 'snowflake';
 	}
-	else if(weatherString.includes(bolt) || weatherString.includes('thunderstorm') )
-	{
-		return 'bolt';
-	}
-	else if(weatherString.includes(cloudrain) || weatherString.includes("shower") )
+	else if(weatherString.includes(cloudrain))
 	{
 		return 'cloud-rain';
 	}
-	else if(weatherString.includes(cloud) || weatherString.includes("clouds"))
+	else if(weatherString.includes(cloud))
 	{
 		return 'cloud';
 	}
-	else if(weatherString.includes(cloudsun) || weatherString.includes("mist"))
+	else if(weatherString.includes(cloudsun))
 	{
 		return 'cloud-sun';
+	}
+	else if(weatherString.includes(sun))
+	{
+		return 'sun';
 	}
 	else
 	{
