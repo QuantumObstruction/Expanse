@@ -1,9 +1,13 @@
+body {
+	background-color:#D8BFD8 /*Thistle*/
+}
+
 .flexRow
 {
-  background: pink
+  /* background: pink */
 }
 
 .statusSection
 {
-  background: teal
+  /* background: teal */
 }

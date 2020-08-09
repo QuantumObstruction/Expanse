@@ -2,8 +2,6 @@
 
 body {
 	background-color:#D8BFD8 /*Thistle*/
-  /* background-image: url("bg.jpg"); */
-  /* background-size: cover; */
 }
 
 #table {
@@ -322,5 +320,8 @@ td {
 	right: 50px;
 	bottom: 0;
 	position: fixed;
+}
 
+#title {
+	font-family: Geneva;
 }

@@ -64,7 +64,7 @@ function loc_callback(req,res,context){
 //-----------------------------------------------------------
 function weather_callback(req,res,context){
   console.log('weather_callback:');
-  console.log(context);
+  // console.log(context);
   res.render('weather', context);
   return;
 }
@@ -140,20 +140,17 @@ function handle_search(req,res){
   context.title = "weather";
   context.username = req.body.username;
   context.units = "imperial";
+  context.locs = [];
   place = req.body.place.split(",");
   // Did user provide zipcode or city?
   if (isNaN(place[0])){
-    cities = [];
-    cities.push({"city":place[0],
-                 "state":place[1],
-                 "country":place[2]
-                });
-    context.cities = cities;
+    loc = place[0] + "," +
+          place[1] + "," +
+          place[2];
+    context.locs.push({"place":loc});
   }
   else {
-    zipcodes = [];
-    zipcodes.push({"zipcode":place[0]});
-    context.zipcodes = zipcodes;
+    context.locs.push({"place":place[0]});
   }
 
   weather_api.retrieveWeather(req,res,context,

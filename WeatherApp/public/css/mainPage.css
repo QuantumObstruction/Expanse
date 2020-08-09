@@ -1,6 +1,10 @@
+body {
+	background-color:#D8BFD8 /*Thistle*/
+}
+
 #topTitle
 {
-  background: red;
+  /* background: red; */
   margin-top: 15px;
   margin-left: 10px;
 }
@@ -22,13 +26,13 @@
 
 #mainArea
 {
-  background: green;
+  /* background: green; */
 
 }
 
 #sidebarArea
 {
-  background: orange
+  /* background: orange */
 
 }
 
@@ -36,7 +40,7 @@
 {
 margin-left: 10px;
 margin-bottom: 30px;
-background-color: purple;
+/* background-color: purple; */
 }
 
 
@@ -56,46 +60,6 @@ background-color: purple;
   color: white;
   text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #avatar {
 	width: 120px;

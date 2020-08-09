@@ -1,5 +1,4 @@
 var mysql = require('../dbcon.js');
-var myapp = require('../weatherApp.js');
 var myweather = require('../weatherapi/retrieveWeather.js')
 
 //=================================================================
@@ -34,7 +33,6 @@ function retrieveZipCodes(req,res,context,callback) {
       console.log("ERROR SELECT !!!!");
       console.log(err);
       context.err_msg = "Error retrieving zip codes from database"
-      context.zipcodes = zipcodes;    
       retrieveCities(req, res, context, callback);
       return;
     }

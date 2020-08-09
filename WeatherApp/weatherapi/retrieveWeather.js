@@ -7,7 +7,7 @@ const request = require('request');
 //=================================================================
 function retrieveWeather(req,res,context,callback) {
   console.log('retrieveWeather:');
-  console.log(context);
+  // console.log(context);
   retrieveCurrentWeather(req,res,context,0,callback);
 }
 
@@ -16,6 +16,7 @@ function retrieveWeather(req,res,context,callback) {
 //=================================================================
 function retrieveCurrentWeather(req,res,context,idx,callback) {
   console.log('retrieveCurrentCodeWeather:');
+  // console.log('idx=' + idx);
 
   if (idx < context.locs.length) {
     if (isNaN(context.locs[idx].place)){
