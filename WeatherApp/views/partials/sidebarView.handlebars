@@ -8,24 +8,23 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="example.css">
+    <link rel="stylesheet" href="css/sidebar.css">
   </head>
 
   <body>
 
-{{log "***** passed context =" this}}
+{{#each this.locs}}
 
     <div class="row justify-content-center">
-        <div class="row-12" id="rightCard">
+        <div class="row" id="rightCard">
             <div class="card2">
               <div class="container">
                 <div class="row" id="topRowDetailedWeather">
-                  <h4 id="selectedCityCond">{{this.current.0.weatherTitle}}</h4>
+                  <h4 id="selectedCityCond">{{this.current.weatherTitle}}</h4>
                 </div>
                 <div class="row">
 
-                  <i class="fas fa-cloud fa-4x"></i>
-                  <p>use JS to select appropriate icon</p>
+                <i class="fas fa-{{this.current.weatherIcon}} fa-4x"></i>
 
                 </div>
               </div>
@@ -33,31 +32,19 @@
 
                     <div class="row">
                         <p class="light-text">Current Temp</p>
-                        <h4 class="ml-auto"  id="currentTempVal">{{this.current.1.currently}}</h4>
-                    </div>
-                    <div class="row">
-                        <p class="light-text">High</p>
-                        <p class="ml-auto">{{this.current.4.max}}</p>
-                    </div>
-                    <div class="row">
-                        <p class="light-text">Low</p>
-                        <p class="ml-auto">{{this.current.5.min}}</p>
+                        <p class="ml-auto"  id="currentTempVal">{{this.current.currently}}</p>
                     </div>
                     <div class="row">
                         <p class="light-text">Wind</p>
-                        <p class="ml-auto">{{this.current.9.wind}}</p>
-                    </div>
-                    <div class="row">
-                        <p class="light-text">Rain</p>
-                        <p class="ml-auto">JS + REGEX FOR THIS</p>
+                        <p class="ml-auto" id="windVal">{{this.current.wind}}</p>
                     </div>
                     <div class="row">
                         <p class="light-text">Humidity</p>
-                        <p class="ml-auto">{{this.current.7.humid}}</p>
+                        <p class="ml-auto" id="humidVal">{{this.current.humid}}</p>
                     </div>
                     <div class="row">
                         <p class="light-text">Visibility</p>
-                        <p class="ml-auto">{{this.current.8.visib}}</p>
+                        <p class="ml-auto" id="visVal">{{this.current.visib}}</p>
                     </div>
 
                     <div class="line my-2"></div>
@@ -70,7 +57,7 @@
 
                     <div class="row">
                       <div class="col center-block text-center">
-                        <p class="light-text" id="weatherDescTitle">{{this.current.2.description}}</p>
+                        <p class="light-text" id="weatherDescriptionText">{{this.current.description}}</p>
                       </div>
                     </div>
 
@@ -78,7 +65,7 @@
         </div>
     </div>
 
-
+{{/each}}
 
   </body>
 </html>

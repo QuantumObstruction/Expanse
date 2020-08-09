@@ -1,17 +1,10 @@
 var mysql = require('../dbcon.js');
-var myapp = require('../weatherApp.js');
 
 //=================================================================
 // Attempt to update the max locations for the indicated user.
 //================================================================= 
 function updateMaxLocations(req,res,context,callback) {
   console.log('updateMaxLocations:');
-
-  if (myapp.dbEmulation == true){
-    console.log('emulated successful max location update');
-    callback(req,res,context);
-    return;
-  }
   
   var values = [
     req.body.max_locs,

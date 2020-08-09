@@ -6,7 +6,7 @@
   <input type="hidden"
          name="username"
          value={{this.username}}>
-  <input id="input-Autocomplete" 
+  <input id="input-Autocomplete"
          placeholder="Search by zipcode/city"
          name="place">
 
@@ -26,13 +26,22 @@
           value="add">
     <i class="fa fa-plus"></i>
   </button>
-  
+
   <button class="btn"
           id="subBtn"
           name="subtract"
           type="submit"
           value="subtract">
-    <i class="fa fa-plus"></i>
+    <i class="fa fa-minus"></i>
   </button>
 
+</form>
+
+<form action="" method="post" style="margin-top: 35px; margin-left: 270px; margin-bottom: -10px;">
+  <select id="units" name="units" value="imperial" style="border-radius:36px;
+  overflow:hidden;">
+    <option value="imperial">Fahrenheit</option>
+    <option value="metric">Celsius</option>
+  </select>
+  <input type="submit" value="Select Units" style="background-color: #DC143C; color:white; cursor: pointer; border: none; font-size: 14px; font-weight: bold;"/>
 </form>

@@ -8,44 +8,36 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="cityForecast.css">
-
-{{log "+++++++ passed to forecast =" this}}
+    <link rel="stylesheet" href="css/cityForecast.css">
 
   </head>
 
   <body>
 
 
-    <div class="d-flex flexRow" id="">
+    <div class="d-flex flexRow forecast-row" id="city{{@index}}">
+
       <div class="p-2 flex-fill statusSection">
 
+        <div class="row">
+          <div class="col-12">
+            <h3>{{this.current.weatherTitle}}</h3>
+          </div>
+        </div>
 
+        <div class="row">
 
-                  <div class="row">
-                    <div class="col-12">
-                      <h3>{{this.current.weatherTitle}}</h3>
-                    </div>
-                  </div>
+          <div class="col-5 cityTempDisplay">
+            <div class="weather-date-location">
+              <h4 class="display-3">{{this.current.currently}}°</h4>
+            </div>
+          </div>
 
-                  <div class="row">
-                    <div class="col-5 cityTempDisplay">
-                          <div class="weather-date-location">
-                            <h4 class="display-3">{{this.current.currently}}°</h4>
-                          </div>
-                    </div>
+          <div class="col-6 weatherIconSpace my-auto" id="">
+            <i class="fas fa-{{this.current.weatherIcon}} fa-4x"></i>
+          </div>
 
-                    <div class="col-6 weatherIconSpace my-auto" id="">
-                      <i class="fas fa-{{this.current.weatherIcon}} fa-4x"></i>
-                    </div>
-                  </div>
-
-
-
-
-
-
-
+        </div>
 
       </div>
 

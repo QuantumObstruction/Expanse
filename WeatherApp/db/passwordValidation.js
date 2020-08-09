@@ -1,5 +1,4 @@
 var mysql = require('../dbcon.js');
-var myapp = require('../weatherApp.js');
 var db_loc = require('./retrieveLocations.js');
 
 //=================================================================
@@ -7,13 +6,6 @@ var db_loc = require('./retrieveLocations.js');
 //================================================================= 
 function passwordValidation(req,res,pwcallback) {
   console.log('passwordValidation:');
-
-  if (myapp.dbEmulation == true){
-    console.log('emulated successful password validation');
-    db_loc.retrieveLocations(req,res);
-    pwcallback(req,res,true,"");
-    return;
-  }
   
   var query = 
     "SELECT * from Users" +
