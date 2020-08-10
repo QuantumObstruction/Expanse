@@ -1,29 +1,39 @@
 <center>
   {{> page_header}}
+  <h3 style="color:#B22222;">Settings</h3>
+</center>
 
-  <p>Settings</p>
-  <p>username: {{this.username}}</p>
-  <p>email: {{this.email}}</p>
-  <p>max locs: {{this.max_locs}}</p>
+<center>
+<div style="display:inline-block; margin-top:20px;">
+
+  <div style="margin-right: 14px; margin-top: 50px;float:left; font-size:26px; font-family: Geneva;">
+    username: <p style="color:#B22222; display:inline-block;">{{this.username}}</p><br>
+    email: <p style="color:#B22222;display:inline-block;">{{this.email}}</p><br>
+    max locs: <p style="color:#B22222;display:inline-block;">{{this.max_locs}}</p><br>
+  </div>
   
   {{#if this.admin}}
     <form action=""
           id="login-form"  
           method="post"
           onSubmit="return maxLocsValidation();">
+          
+  <div style="float:right;">
       <div class="container">
         <input type="hidden"
                name="username"
                value="{{this.username}}"/>
-        <label for="user_username">Username:
+        <label for="user_username" style="font-size: 26px;font-family: Geneva;">Change username:
         </label>
         <input type="text" 
                name="user_username" 
                id="user_username" 
                class="login-form-input" 
                placeholder="Username"/>
-        <label for="max_locs">Maximum Locations (between 1 and 10):
+        <br/>
+        <label for="max_locs" style="font-size: 26px;font-family: Geneva;">Maximum Locations (between 1 and 10):
         </label>
+
         <input type="number" 
                id="max_locs" 
                name="max_locs" 
@@ -33,27 +43,34 @@
                max="10"/>
         <input type="submit"
                name="submit"
-               value="updateMaxLocs"/>
-      </div>
-    </form>
-  {{/if}}
-
-  <a href="login" 
+               value="updateMaxLocs" style="margin-top:26px; width: 150px; margin-left:280px;" id="login"/>
+     
+  <div style="margin-left: 180px; margin-top: 10px; padding-bottom: -16px;">   
+    <a href="login" 
      id="register" 
      style="font-size: 18px; 
             font-style: italic; 
             margin-bottom: -15px; 
-            margin-left: 185px;">Logout</a>
+            margin-left: 185
+            px;">Logout</a>
 
-  <a href="weather?username={{this.username}}"
+    <a href="weather?username={{this.username}}"
      id="register"
      style="font-size: 18px; 
             font-style: italic; 
             margin-top: 20px; 
             margin-left: 185px;">Return</a>
+    </div>        
+   </div>
+  </div>     
+ </form>
+
+ </div>  
+ </center>
+    
+  {{/if}}
+ 
 
   {{#if this.err_msg}}
     <h2>{{this.err_msg}}</h2>
   {{/if}}
-
-</center>
