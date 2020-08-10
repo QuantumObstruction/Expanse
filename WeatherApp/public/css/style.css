@@ -26,16 +26,13 @@ li {
 
 #weatherpal {
   color:#DC143C; 
-  font-size:57px; 
-  margin-left:490px; 
-  cursor: pointer;
+  font-size:65px;
 }
 
 #expanse {
   margin-top:-11px; 
   color:#B22222; 
-  font-style:italic; 
-  margin-left:590px; 
+  font-style:italic;
   font-size:20px; 
   margin-bottom:30px;
 }
@@ -247,7 +244,9 @@ li {
   position: relative;
   display: inline-block;
   float: left;
-  margin-left: -945px;
+  margin-bottom: 20px;
+  margin-top: -30px;
+  margin-left: -25px;
 }
 
 .dropdown-content {
@@ -315,6 +314,7 @@ li {
   height: 40px;
   margin-left: 10px;
   margin-bottom: 30px;
+  margin-top: 15px;
 }
 
 #mainArea {
