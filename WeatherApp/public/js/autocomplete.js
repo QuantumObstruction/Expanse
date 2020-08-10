@@ -2,46 +2,49 @@
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
+function interpritLocation(passedLocationObject)
+{
+  for (i = 0; i < passedLocationObject.address_components.length; i++)
+  {
+
+    var processedLocation = {city:"", country:"", state:""};
+
+    if (passedLocationObject.address_components[i].types[0] == "locality")
+    {
+      processedLocation.city = passedLocationObject.address_components[i].short_name
+    }
+
+    if (passedLocationObject.address_components[i].types[0] == "country")
+    {
+      processedLocation.country = passedLocationObject.address_components[i].short_name
+    }
+
+    if (passedLocationObject.address_components[i].types[0] == "administrative_area_level_1")
+    {
+      processedLocation.state = passedLocationObject.address_components[i].short_name
+    }
+  }
+
+  return processedLocation
+}
+
+
 function initMap()
 {
 
   var input = document.getElementById('input-Autocomplete');
   var autocomplete = new google.maps.places.Autocomplete(input);
 
-
-
-autocomplete.addListener('place_changed', function() 
+  autocomplete.addListener('place_changed', function()
   {
     var placeObject = autocomplete.getPlace();
 
-    var city = ""
-    var state = ""
-    var country = ""
-
     console.log(placeObject.address_components);
 
-		for (i = 0; i < placeObject.address_components.length; i++)
-    {
-  		if (placeObject.address_components[i].types[0] == "locality")
-      {
-				city = placeObject.address_components[i].short_name
-      }
+    var finalLocation = interpritLocation(placeObject)
 
-      if (placeObject.address_components[i].types[0] == "country")
-      {
-				country = placeObject.address_components[i].short_name
-      }
-
-      if (placeObject.address_components[i].types[0] == "administrative_area_level_1")
-      {
-				state = placeObject.address_components[i].short_name
-      }
-		}
-
-
-			console.log("corrected format: " + city, state, country)
-			input.value=city+","+state+","+country
-
+		console.log("corrected format: " + finalLocation.city, finalLocation.state, finalLocation.country)
+		input.value=finalLocation.city+","+finalLocation.state+","+finalLocation.country
   });
 
 
