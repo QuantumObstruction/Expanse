@@ -2,7 +2,7 @@
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-function interpritLocation(passedLocationObject)
+function interpritLocation(passedLocationObject, passedFinalLocationObject)
 {
   for (i = 0; i < passedLocationObject.address_components.length; i++)
   {
@@ -11,21 +11,24 @@ function interpritLocation(passedLocationObject)
 
     if (passedLocationObject.address_components[i].types[0] == "locality")
     {
-      processedLocation.city = passedLocationObject.address_components[i].short_name
+      console.log("found locality " + passedLocationObject.address_components[i].short_name )
+      passedFinalLocationObject.city = passedLocationObject.address_components[i].short_name
     }
 
     if (passedLocationObject.address_components[i].types[0] == "country")
     {
-      processedLocation.country = passedLocationObject.address_components[i].short_name
+      passedFinalLocationObject.country = passedLocationObject.address_components[i].short_name
+      console.log("found country" +passedLocationObject.address_components[i].short_name)
     }
 
     if (passedLocationObject.address_components[i].types[0] == "administrative_area_level_1")
     {
-      processedLocation.state = passedLocationObject.address_components[i].short_name
+      passedFinalLocationObject.state = passedLocationObject.address_components[i].short_name
+      console.log("found city " + passedLocationObject.address_components[i].short_name)
     }
   }
 
-  return processedLocation
+  return passedFinalLocationObject
 }
 
 
@@ -41,10 +44,13 @@ function initMap()
 
     console.log(placeObject.address_components);
 
-    var finalLocation = interpritLocation(placeObject)
+    var processedLocation = {city:"", country:"", state:""};
+    processedLocation = interpritLocation(placeObject, processedLocation)
 
-		console.log("corrected format: " + finalLocation.city, finalLocation.state, finalLocation.country)
-		input.value=finalLocation.city+","+finalLocation.state+","+finalLocation.country
+    console.log("final: " + processedLocation)
+
+		console.log("corrected format: " + processedLocation.city, processedLocation.state, processedLocation.country)
+		input.value=processedLocation.city+","+processedLocation.state+","+processedLocation.country
   });
 
 
