@@ -48,7 +48,7 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
         let humid = `${weather.main.humidity}%`;
         let visib = `${(weather.visibility)} ft`;
         let wind = `${(weather.wind.speed)} mph`;
-	      
+
         weatherIcon = weatherIconParser(description)
         currentlySelected= false;
 
