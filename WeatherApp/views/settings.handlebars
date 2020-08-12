@@ -45,6 +45,14 @@
                name="submit"
                value="updateMaxLocs" style="margin-top:26px; width: 150px; margin-left:280px;" id="login"/>
      
+  </div>     
+ </form>
+
+ </div>  
+ </center>
+    
+  {{/if}}
+ 
   <div style="margin-left: 180px; margin-top: 10px; padding-bottom: -16px;">   
     <a href="login" 
      id="register" 
@@ -62,15 +70,8 @@
             margin-left: 185px;">Return</a>
     </div>        
    </div>
-  </div>     
- </form>
-
- </div>  
- </center>
-    
-  {{/if}}
- 
 
   {{#if this.err_msg}}
+    <br/>
     <h2>{{this.err_msg}}</h2>
   {{/if}}
