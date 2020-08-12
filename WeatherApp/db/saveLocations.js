@@ -6,8 +6,8 @@ var mysql = require('../dbcon.js');
 
 //-----------------------------------------------------
 function saveZipCode(req,res,context,callback){
-  console.log('saveZipCode:');
-  console.log('zipcode=' + context.place[0]);
+  // console.log('saveZipCode:');
+  // console.log('zipcode=' + context.place[0]);
   
   // Attempt to add zip code to CodeLocations table. (It
   // may already exist there. If so, that's okay.)
@@ -15,11 +15,11 @@ function saveZipCode(req,res,context,callback){
     "INSERT INTO CodeLocations" +
     " (`zipcode`)" +
     " VALUES (?)";
-  console.log(queryStr);
+  // console.log(queryStr);
   var values = [
     context.place[0]
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(queryStr, values, function(err, result){
     if(err){
       if (err.code == 'ER_DUP_ENTRY') {
@@ -39,7 +39,7 @@ function saveZipCode(req,res,context,callback){
       }
     }
     else {
-      console.log('zipcode successfully inserted');
+      // console.log('zipcode successfully inserted');
       saveUserZipCode(req,res,context,callback);
       return;
     }
@@ -48,9 +48,9 @@ function saveZipCode(req,res,context,callback){
 
 //-----------------------------------------------------
 function saveUserZipCode(req,res,context,callback){
-  console.log('saveUserZipCode:');
-  console.log('username=' + context.username);
-  console.log('zipcode=' + context.place[0]);
+  // console.log('saveUserZipCode:');
+  // console.log('username=' + context.username);
+  // console.log('zipcode=' + context.place[0]);
 
   // Attempt to connect the username with the zip code 
   // via the UserCodeLocations table. (It may
@@ -62,12 +62,12 @@ function saveUserZipCode(req,res,context,callback){
     "(SELECT user_id FROM Users WHERE username=?)," +
     "(SELECT code_id FROM CodeLocations WHERE zipcode=?)" +
     ")";
-  console.log(queryStr);
+  // console.log(queryStr);
   var values = [
     context.username,
     context.place[0]
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(queryStr, values, function(err, result){
     if(err){
       if (err.code == 'ER_DUP_ENTRY') {
@@ -86,7 +86,7 @@ function saveUserZipCode(req,res,context,callback){
       }
     }
     else {
-      console.log('connection successfully inserted');
+      // console.log('connection successfully inserted');
       callback(req,res,context);
     }
   });
@@ -94,8 +94,8 @@ function saveUserZipCode(req,res,context,callback){
 
 //-----------------------------------------------------
 function saveCity(req,res,context,callback){
-  console.log('saveZipCode:');
-  console.log('place=' + context.place);
+  // console.log('saveZipCode:');
+  // console.log('place=' + context.place);
   
   // Attempt to add zip code to CodeLocations table. (It
   // may already exist there. If so, that's okay.)
@@ -103,13 +103,13 @@ function saveCity(req,res,context,callback){
     "INSERT INTO CityLocations" +
     " (`city`,`state`,`country`)" +
     " VALUES (?,?,?)";
-  console.log(queryStr);
+  // console.log(queryStr);
   var values = [
     context.place[0],
     context.place[1],
     context.place[2]
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(queryStr, values, function(err, result){
     if(err){
       if (err.code == 'ER_DUP_ENTRY') {
@@ -129,7 +129,7 @@ function saveCity(req,res,context,callback){
       }
     }
     else {
-      console.log('city successfully inserted');
+      // console.log('city successfully inserted');
       saveUserCity(req,res,context,callback);
       return;
     }
@@ -138,9 +138,9 @@ function saveCity(req,res,context,callback){
 
 //-----------------------------------------------------
 function saveUserCity(req,res,context,callback){
-  console.log('saveUserZipCode:');
-  console.log('username=' + context.username);
-  console.log('place=' + context.place);
+  // console.log('saveUserZipCode:');
+  // console.log('username=' + context.username);
+  // console.log('place=' + context.place);
 
   // Attempt to connect the username with the city 
   // via the UserCityLocations table. (It may
@@ -153,14 +153,14 @@ function saveUserCity(req,res,context,callback){
     "(SELECT city_id FROM CityLocations " +
     "WHERE city=? AND state=? AND country=?)" +
     ")";
-  console.log(queryStr);
+  // console.log(queryStr);
   var values = [
     context.username,
     context.place[0],
     context.place[1],
     context.place[2]
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(queryStr, values, function(err, result){
     if(err){
       if (err.code == 'ER_DUP_ENTRY') {
@@ -179,7 +179,7 @@ function saveUserCity(req,res,context,callback){
       }
     }
     else {
-      console.log('connection successfully inserted');
+      // console.log('connection successfully inserted');
       callback(req,res,context);
     }
   });

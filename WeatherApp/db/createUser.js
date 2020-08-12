@@ -5,7 +5,7 @@ var db_loc = require('./retrieveLocations.js');
 // Attempt to validate the user's password.
 //================================================================= 
 function createUser(req,res) {
-  console.log('createUser:');
+  // console.log('createUser:');
   var context = {};
   context.username = req.body.username;
   context.password = req.body.password;
@@ -15,13 +15,13 @@ function createUser(req,res) {
     "INSERT INTO Users" +
     " (`username`, `password`, `email_addr`, `admin_flag`)" +
     " VALUES (?, ?, ?, false)";
-  console.log(queryStr);
+  // console.log(queryStr);
   var values = [
     req.body.username,
     req.body.password,
     req.body.email
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(queryStr, values, function(err, result){
     if(err){
       if (err.code == 'ER_DUP_ENTRY') {
@@ -40,7 +40,7 @@ function createUser(req,res) {
       }
     }
     else {
-      console.log('username successfully created');
+      // console.log('username successfully created');
       res.redirect('/weather?username=' +
                    context.username);
     return;

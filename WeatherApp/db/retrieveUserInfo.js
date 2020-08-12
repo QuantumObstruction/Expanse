@@ -4,16 +4,16 @@ var mysql = require('../dbcon.js');
 // Attempt to retrieve the user's information.
 //================================================================= 
 function retrieveUserInfo(req,res,context,callback) {
-  console.log('retrieveUserInfo:');
+  // console.log('retrieveUserInfo:');
   
   var query = 
     "SELECT email_addr, max_locs, admin_flag FROM Users" +
     " WHERE Users.username = ?";
-  console.log(query);
+  // console.log(query);
   var values = [
     context.username
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
     if(err){
       console.log("ERROR SELECT !!!!");
@@ -23,8 +23,8 @@ function retrieveUserInfo(req,res,context,callback) {
       return;
     }
     else {
-      console.log('user rows:')
-      console.log(rows);
+      // console.log('user rows:')
+      // console.log(rows);
       if (rows.length > 0)
       {
         context.email = rows[0].email_addr;
