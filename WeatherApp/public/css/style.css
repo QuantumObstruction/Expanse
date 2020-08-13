@@ -34,7 +34,7 @@ li {
   color:#B22222; 
   font-style:italic;
   font-size:20px; 
-  margin-bottom:30px;
+  margin-bottom: -50px;
 }
 
 
@@ -240,13 +240,12 @@ li {
 }
 
 .dropdown {
-  padding-top: 20px;
   position: relative;
   display: inline-block;
   float: left;
-  margin-bottom: 20px;
-  margin-top: -30px;
-  margin-left: -25px;
+  margin-bottom: 40px;
+  margin-left: -12px;
+  margin-top: -25px;
 }
 
 .dropdown-content {
@@ -313,8 +312,7 @@ li {
   width: 1300px;
   height: 40px;
   margin-left: 10px;
-  margin-bottom: 30px;
-  margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 #mainArea {
