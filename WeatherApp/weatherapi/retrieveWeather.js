@@ -53,7 +53,7 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
         currentlySelected= false;
 
         //tidy up the format for nice display
-        currently = Math.round(currently.slice(0, 2))
+        currently = Math.round(currently.slice(0, -8))
 
         //check to see if the selected city number is the same one we're lookng at
         if (context.selectCityNumber==idx)
