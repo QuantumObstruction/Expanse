@@ -5,7 +5,7 @@ var myweather = require('../weatherapi/retrieveWeather.js')
 // Attempt to retrieve the user's saved locations.
 //================================================================= 
 function retrieveLocations(req,res,context,callback) {
-  console.log('retrieveLocations:');
+  // console.log('retrieveLocations:');
   context.locs = []
   retrieveZipCodes(req,res,context,callback);
 }
@@ -14,7 +14,7 @@ function retrieveLocations(req,res,context,callback) {
 // Attempt to retrieve the user's saved zip codes.
 //================================================================= 
 function retrieveZipCodes(req,res,context,callback) {
-  console.log('retrieveZipCodes:');
+  // console.log('retrieveZipCodes:');
   
   var query = 
     "SELECT Users.user_id, zipcode FROM Users" +
@@ -23,11 +23,11 @@ function retrieveZipCodes(req,res,context,callback) {
     " INNER JOIN CodeLocations" +
     " ON UserCodeLocations.code_id = CodeLocations.code_id" +
     " WHERE Users.username = ?";
-  console.log(query);
+  // console.log(query);
   var values = [
     context.username
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
     if(err){
       console.log("ERROR SELECT !!!!");
@@ -37,8 +37,8 @@ function retrieveZipCodes(req,res,context,callback) {
       return;
     }
     else {
-      console.log('zipcode rows:')
-      console.log(rows);
+      // console.log('zipcode rows:')
+      // console.log(rows);
       if (rows.length > 0)
       {
         for (var x in rows)
@@ -59,7 +59,7 @@ function retrieveZipCodes(req,res,context,callback) {
       }
       else
       {
-        console.log('no match for zip codes');
+        // console.log('no match for zip codes');
         retrieveCities(req, res, context, callback);
         return;
       }
@@ -72,7 +72,7 @@ function retrieveZipCodes(req,res,context,callback) {
 // Attempt to retrieve the user's saved city information.
 //================================================================= 
 function retrieveCities(req,res,context,callback) {
-  console.log('retrieveCities:');
+  // console.log('retrieveCities:');
   
   var query = 
     "SELECT Users.user_id, city, state, country FROM Users" +
@@ -81,11 +81,11 @@ function retrieveCities(req,res,context,callback) {
     " INNER JOIN CityLocations" +
     " ON UserCityLocations.city_id = CityLocations.city_id" +
     " WHERE Users.username = ?";
-  console.log(query);
+  // console.log(query);
   var values = [
     context.username
   ];
-  console.log(values);
+  // console.log(values);
   mysql.pool.query(query, values, function(err, rows, fields) {
     if(err){
       console.log("ERROR SELECT !!!!");
@@ -96,8 +96,8 @@ function retrieveCities(req,res,context,callback) {
       return;
     }
     else {
-      console.log('cities rows:');
-      console.log(rows);
+      // console.log('cities rows:');
+      // console.log(rows);
       if (rows.length > 0)
       {
         for (var x in rows)
@@ -121,7 +121,7 @@ function retrieveCities(req,res,context,callback) {
       }
       else
       {
-        console.log('no match for cities');
+        // console.log('no match for cities');
         callback(req, res, context);
       }
     }

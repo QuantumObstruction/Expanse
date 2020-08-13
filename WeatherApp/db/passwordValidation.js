@@ -5,17 +5,17 @@ var db_loc = require('./retrieveLocations.js');
 // Attempt to validate the user's password.
 //================================================================= 
 function passwordValidation(req,res,pwcallback) {
-  console.log('passwordValidation:');
+  // console.log('passwordValidation:');
   
   var query = 
     "SELECT * from Users" +
     " WHERE username = ? AND password = ?";
-  console.log(query);
+  // console.log(query);
   var values = [
     req.body.username,
     req.body.password
   ];
-  console.log(values)
+  // console.log(values)
   mysql.pool.query(query, values, function(err, rows, fields) {
     if(err){
       console.log("ERROR SELECT !!!!");
@@ -24,11 +24,11 @@ function passwordValidation(req,res,pwcallback) {
       return;
     }
     else {
-      console.log(rows);
+      // console.log(rows);
       if (rows.length == 1)
       {
         // Match is found.
-        console.log('match found for username/password');
+        // console.log('match found for username/password');
         pwcallback(req,res,true,"");
         return;
       }

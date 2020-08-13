@@ -12,32 +12,32 @@ var router = require('express').Router();
 
 //=================================================================
 router.get('/', function(req, res) {
-  console.log('weather get /');
+  // console.log('weather get /');
   handle_get(req, res);
 });
 
 //-----------------------------------------------------------
 router.get('/weather', function(req, res) {
-  console.log('weather get /weather');
+  // console.log('weather get /weather');
   handle_get(req, res);
 });
 
 //-----------------------------------------------------------
 router.get('/weather.html', function(req, res) {
-  console.log('weather get /weather.html');
+  // console.log('weather get /weather.html');
   handle_get(req, res);
 });
 
 //-----------------------------------------------------------
 function handle_get(req, res){
-  console.log('req.body:');
-  console.log(req.query);
+  // console.log('req.body:');
+  // console.log(req.query);
   var context = {};
   context.title = "weather";
   context.username = req.query.username;
   context.units = "imperial";
-  console.log('context.username=' + context.username);
-  console.log('context.units=' + context.units);
+  // console.log('context.username=' + context.username);
+  // console.log('context.units=' + context.units);
 
   // Retrieve the user's info and saved locations
   db_user.retrieveUserInfo(req,res,context,max_loc_callback);
@@ -46,14 +46,14 @@ function handle_get(req, res){
 
 //----------------------------------------------------
 function max_loc_callback(req,res,context){
-  console.log('max_loc_callback');
+  // console.log('max_loc_callback');
   db_loc.retrieveLocations(req,res,context,loc_callback);
   return;
 }
 
 //-----------------------------------------------------------
 function loc_callback(req,res,context){
-  console.log('loc_callback:');
+  // console.log('loc_callback:');
   // Now that we've retrieve the user's locations,
   // we can retrieve the user's weather.
   weather_api.retrieveWeather(req,res,context,
@@ -63,7 +63,7 @@ function loc_callback(req,res,context){
 
 //-----------------------------------------------------------
 function weather_callback(req,res,context){
-  console.log('weather_callback:');
+  // console.log('weather_callback:');
   // console.log(context);
   res.render('weather', context);
   return;
@@ -71,8 +71,8 @@ function weather_callback(req,res,context){
 
 //=================================================================
 router.post('/', function(req, res) {
-    console.log('weather post / req.body:')
-    console.log(req.body);
+    // console.log('weather post / req.body:')
+    // console.log(req.body);
 
     // ------------------------------------------------------------------
     if(req.body['search']){
@@ -103,26 +103,26 @@ router.post('/', function(req, res) {
 
 //----------------------------------------------------
 function handle_subtract(req,res){
-  console.log('handle_subtract:');
+  // console.log('handle_subtract:');
   var context = {};
   context.title = "weather";
   context.username = req.query.username;
   context.units = "imperial";
-  console.log('context.username=' + context.username);
-  console.log('context.units=' + context.units);
+  // console.log('context.username=' + context.username);
+  // console.log('context.units=' + context.units);
 
   // Retrieve the user's info and saved locations
   db_sub.deleteLocation(req,res,context,del_callback);
 }
 
 function del_callback(req,res,context){
-  console.log('del_callback:');
+  // console.log('del_callback:');
   db_user.retrieveUserInfo(req,res,context,max_loc_callback);
 }
 
 //----------------------------------------------------
 function handle_units(req,res){
-  console.log('handle_units');
+  // console.log('handle_units');
   context = {};
   context.title = "weather";
   context.username = req.query.username;
@@ -135,7 +135,7 @@ function handle_units(req,res){
 
 //----------------------------------------------------
 function handle_search(req,res){
-  console.log('handle_search');
+  // console.log('handle_search');
   context = {};
   context.title = "weather";
   context.username = req.body.username;
@@ -160,7 +160,7 @@ function handle_search(req,res){
 
 //----------------------------------------------------
 function handle_add(req,res){
-  console.log('handle_add');
+  // console.log('handle_add');
   context = {};
   context.title = "weather";
   context.units = "imperial";
@@ -173,14 +173,14 @@ function handle_add(req,res){
 
 //----------------------------------------------------
 function user_callback(req,res,context){
-  console.log('user_callback');
+  // console.log('user_callback');
   db_loc.retrieveLocations(req,res,context,check_callback);
   return;
 }
 
 //----------------------------------------------------
 function check_callback(req,res,context){
-  console.log('check_callback');
+  // console.log('check_callback');
   if (context.locs.length < context.max_locs)
   {
     // Did user provide zipcode or city?
@@ -202,7 +202,7 @@ function check_callback(req,res,context){
 
 //----------------------------------------------------
 function add_callback(req,res,context){
-  console.log('add_callback');
+  // console.log('add_callback');
   db_loc.retrieveLocations(req,res,context,loc_callback);
   return;
 }

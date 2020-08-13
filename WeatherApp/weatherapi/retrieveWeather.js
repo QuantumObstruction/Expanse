@@ -6,7 +6,7 @@ const request = require('request');
 // Attempt to retrieve the weather for the user's saved locations.
 //=================================================================
 function retrieveWeather(req,res,context,callback) {
-  console.log('retrieveWeather:');
+  // console.log('retrieveWeather:');
   // console.log(context);
   retrieveCurrentWeather(req,res,context,0,callback);
 }
@@ -15,7 +15,7 @@ function retrieveWeather(req,res,context,callback) {
 // Attempt to retrieve the current weather.
 //=================================================================
 function retrieveCurrentWeather(req,res,context,idx,callback) {
-  console.log('retrieveCurrentCodeWeather:');
+  // console.log('retrieveCurrentCodeWeather:');
   // console.log('idx=' + idx);
 
   if (idx < context.locs.length) {
@@ -105,7 +105,7 @@ function retrieveCurrentWeather(req,res,context,idx,callback) {
 // Attempt to retrieve the forecast weather.
 //=================================================================
 function retrieveForecastWeather(req,res,context,idx,callback) {
-  console.log('retrieveForecastWeather: idx=' + idx);
+  // console.log('retrieveForecastWeather: idx=' + idx);
 
   if (idx < context.locs.length) {
     if (isNaN(context.locs[idx].place)){
@@ -124,13 +124,13 @@ function retrieveForecastWeather(req,res,context,idx,callback) {
 
     function handleForecastGet(err, response, body){
       idx += 1;
-      console.log('handleForecastGet: idx=' + idx);
+     // console.log('handleForecastGet: idx=' + idx);
       if(!err && response.statusCode < 400){
         let forecast = JSON.parse(body);
         // console.log(forecast);
 
         let cnt = forecast.cnt;
-        console.log('cnt=' + cnt);
+        // console.log('cnt=' + cnt);
 
         var x;
         var y = 0;   // this is essentially a date index
